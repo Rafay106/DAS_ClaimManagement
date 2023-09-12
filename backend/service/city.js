@@ -1,6 +1,12 @@
 import db from "../config/db.js";
 
-const getAllCities = async (stateID) => {
+const getAllCities = async () => {
+  const [rows] = await db.query("SELECT id, name FROM city");
+
+  return rows;
+};
+
+const getCitiesByState = async (stateID) => {
   const [rows] = await db.query(
     "SELECT id, name FROM city WHERE state_id = " + stateID
   );
@@ -8,4 +14,4 @@ const getAllCities = async (stateID) => {
   return rows;
 };
 
-export { getAllCities };
+export { getAllCities, getCitiesByState };
