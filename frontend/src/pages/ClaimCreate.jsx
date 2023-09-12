@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Form, FormSelect } from "react-bootstrap";
+import FormContainer from "../components/FormContainer";
 
 function ClaimCreate() {
   const navigate = useNavigate();
@@ -8,21 +10,21 @@ function ClaimCreate() {
   const [inputs, setInputs] = useState({});
   const [cities, setCities] = useState([]);
 
-  const handleInputs = (e) => {
+  const inputsHandler = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const onSubmit = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     console.log(inputs);
     if (true) {
       const claim = {
-        emp_name: inputs.emp_name,
-        emp_number: inputs.emp_number,
-        claim_for: inputs.claim_for,
-        bill_date: inputs.bill_date,
+        emp_name: inputs.ename,
+        emp_number: inputs.enumber,
+        claim_for: inputs.claimFor,
+        bill_date: inputs.billDate,
         amt: inputs.amt,
         place: inputs.place,
       };
@@ -30,6 +32,7 @@ function ClaimCreate() {
         if (res.data.message === "Post Created") {
           navigate("/");
         } else setErr(res.data.message);
+        console.log(err);
       });
     } else setErr("Category is required!");
   };
@@ -39,64 +42,64 @@ function ClaimCreate() {
   }, []);
 
   return (
-    <div className="container">
-      <p id="err">{err}</p>
-      <form onSubmit={onSubmit}>
-        <div>
-          <input
+    <FormContainer>
+      <h1>File Claim Form</h1>
+      <Form onSubmit={submitHandler}>
+        <Form.Group className="my-2" controlId="emp-name">
+          <Form.Control
             type="text"
-            name="emp_name"
-            placeholder="Employee Name"
-            onChange={handleInputs}
+            name="ename"
+            placeholder="Enter Employee Name"
+            onChange={inputsHandler}
           />
-        </div>
-        <div>
-          <input
+        </Form.Group>
+        <Form.Group className="my-2" controlId="emp-num">
+          <Form.Control
             type="text"
-            name="emp_number"
-            placeholder="Employee Number"
-            onChange={handleInputs}
+            name="enumber"
+            placeholder="Enter Employee Number"
+            onChange={inputsHandler}
           />
-        </div>
-        <div>
-          <input
+        </Form.Group>
+        <Form.Group className="my-2" controlId="claim-for">
+          <Form.Control
             type="text"
-            name="claim_for"
+            name="claimFor"
             placeholder="Claim For?"
-            onChange={handleInputs}
+            onChange={inputsHandler}
           />
-        </div>
-        <div>
-          Bill Date:{" "}
-          <input
+        </Form.Group>
+        <Form.Group className="my-2" controlId="bill-date">
+          <Form.Control
             type="date"
-            name="bill_date"
-            placeholder="Claim For?"
-            onChange={handleInputs}
+            name="billDate"
+            // placeholder="Claim For?"
+            onChange={inputsHandler}
           />
-        </div>
-        <div>
-          <input
+        </Form.Group>
+        <Form.Group className="my-2" controlId="amt">
+          <Form.Control
             type="number"
             name="amt"
-            placeholder="Amount"
-            onChange={handleInputs}
+            placeholder="Enter amount"
+            onChange={inputsHandler}
           />
-        </div>
-        <div>
-          <select name="place">
+        </Form.Group>
+        <Form.Group className="my-2" controlId="place">
+          <Form.Select name="place" onChange={inputsHandler}>
+            <option>Select City</option>
             {cities.map((city) => (
               <option key={city.id} value={city.id}>
                 {city.name}
               </option>
             ))}
-          </select>
-        </div>
-        <div>
-          <button>Submit</button>
-        </div>
-      </form>
-    </div>
+          </Form.Select>
+        </Form.Group>
+        <Form.Group className="my-2" controlId="emp-name">
+          <Form.Control type="submit" />
+        </Form.Group>
+      </Form>
+    </FormContainer>
   );
 }
 export default ClaimCreate;
