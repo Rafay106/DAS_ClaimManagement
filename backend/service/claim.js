@@ -1,6 +1,6 @@
 import db from "../config/db.js";
 
-const getClaims = async (userID) => {
+const serviceGetClaims = async (userID) => {
   const [[{ code }]] = await db.query(
     `SELECT designation.code FROM user, employee, designation
     WHERE user.employee_id = employee.id
@@ -18,4 +18,4 @@ const getClaims = async (userID) => {
   return rows;
 };
 
-export { getClaims };
+export { serviceGetClaims };

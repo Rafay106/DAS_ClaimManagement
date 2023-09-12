@@ -1,15 +1,9 @@
 import express from "express";
-import asyncHandler from "express-async-handler";
-import { getClaims } from "../service/claim.js";
+import { getClaims, createClaim } from "../controllers/claimController.js";
 
 const router = express.Router();
 
-router.get(
-  "/:userID",
-  asyncHandler(async (req, res) => {
-    const cities = await getClaims(req.params.userID);
-    res.status(200).json(cities);
-  })
-);
+router.get("/:userID", getClaims);
+router.post("/", createClaim);
 
 export default router;
