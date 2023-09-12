@@ -5,7 +5,7 @@ const serviceGetClaims = async (userID) => {
     `SELECT designation.code FROM user, employee, designation
     WHERE user.employee_id = employee.id
     AND employee.designation_id = designation.id
-    AND user.id = ${userID}`
+    AND user.id = ${parseInt(userID)}`
   );
 
   const [rows] = await db.query(
