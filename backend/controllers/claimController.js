@@ -10,10 +10,11 @@ const getClaims = asyncHandler(async (req, res) => {
 });
 
 // @desc Create a Claim
-// @route POST /api/claim/
+// @route POST /api/claim
 // @access Public
 const createClaim = asyncHandler(async (req, res) => {
   console.log(req.body);
+  res.send(201).json();
 });
 
 export { getClaims, createClaim };
