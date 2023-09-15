@@ -1,55 +1,26 @@
-import { Container, Card, Button, Row, Col } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import { Row, Col } from "react-bootstrap";
+import FileClaimCard from "../components/FileClaimCard";
+import ApproveClaimCard from "../components/ApproveClaimCard";
+import AddEmployeeCard from "../components/AddEmployeeCard";
+import AddUserCard from "../components/AddUserCard";
 
 const HomePage = () => {
   return (
     <>
       <Row>
         <Col className="m-2">
-          <Card>
-            <Card.Body className="mx-auto">
-              <Card.Title>Add Employee</Card.Title>
-              <Card.Text>Create a new employee</Card.Text>
-              <LinkContainer to="/">
-                <Button className="btn btn-primary">Add</Button>
-              </LinkContainer>
-            </Card.Body>
-          </Card>
+          <FileClaimCard />
         </Col>
         <Col className="m-2">
-          <Card>
-            <Card.Body className="mx-auto">
-              <Card.Title>Add User</Card.Title>
-              <Card.Text>Create a new user</Card.Text>
-              <LinkContainer to="/">
-                <Button className="btn btn-primary">Add</Button>
-              </LinkContainer>
-            </Card.Body>
-          </Card>
+          <ApproveClaimCard />
         </Col>
       </Row>
       <Row>
         <Col className="m-2">
-          <Card>
-            <Card.Body className="mx-auto">
-              <Card.Title>File Claim</Card.Title>
-              <Card.Text>Create a new claim</Card.Text>
-              <LinkContainer to="/claim/create">
-                <Button className="btn btn-danger">Claim</Button>
-              </LinkContainer>
-            </Card.Body>
-          </Card>
+          <AddUserCard />
         </Col>
         <Col className="m-2">
-          <Card>
-            <Card.Body className="mx-auto">
-              <Card.Title>Approve Claim</Card.Title>
-              <Card.Text>Approve a new claim</Card.Text>
-              <LinkContainer to="/claim/approve">
-                <Button className="btn btn-success">Approve</Button>
-              </LinkContainer>
-            </Card.Body>
-          </Card>
+          <AddEmployeeCard />
         </Col>
       </Row>
     </>

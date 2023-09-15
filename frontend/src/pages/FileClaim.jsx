@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, FormSelect } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 
-function ClaimCreate() {
+function FileClaim() {
   const navigate = useNavigate();
   const [err, setErr] = useState("");
   const [inputs, setInputs] = useState({});
@@ -45,7 +45,7 @@ function ClaimCreate() {
     <FormContainer>
       <h1>File Claim Form</h1>
       <Form onSubmit={submitHandler}>
-        <Form.Group className="my-2" controlId="emp-name">
+        <Form.Group className="my-2">
           <Form.Control
             type="text"
             name="ename"
@@ -53,7 +53,7 @@ function ClaimCreate() {
             onChange={inputsHandler}
           />
         </Form.Group>
-        <Form.Group className="my-2" controlId="emp-num">
+        <Form.Group className="my-2">
           <Form.Control
             type="text"
             name="enumber"
@@ -61,7 +61,7 @@ function ClaimCreate() {
             onChange={inputsHandler}
           />
         </Form.Group>
-        <Form.Group className="my-2" controlId="claim-for">
+        <Form.Group className="my-2">
           <Form.Control
             type="text"
             name="claimFor"
@@ -69,7 +69,7 @@ function ClaimCreate() {
             onChange={inputsHandler}
           />
         </Form.Group>
-        <Form.Group className="my-2" controlId="bill-date">
+        <Form.Group className="my-2">
           <Form.Control
             type="date"
             name="billDate"
@@ -77,7 +77,7 @@ function ClaimCreate() {
             onChange={inputsHandler}
           />
         </Form.Group>
-        <Form.Group className="my-2" controlId="amt">
+        <Form.Group className="my-2">
           <Form.Control
             type="number"
             name="amt"
@@ -85,7 +85,7 @@ function ClaimCreate() {
             onChange={inputsHandler}
           />
         </Form.Group>
-        <Form.Group className="my-2" controlId="place">
+        <Form.Group className="my-2">
           <Form.Select name="place" onChange={inputsHandler}>
             <option>Select City</option>
             {cities.map((city) => (
@@ -95,11 +95,19 @@ function ClaimCreate() {
             ))}
           </Form.Select>
         </Form.Group>
-        <Form.Group className="my-2" controlId="emp-name">
+        <Form.Group className="my-2">
+          <Form.Control
+            as="textarea"
+            name="comment"
+            placeholder="Enter comment"
+            onChange={inputsHandler}
+          />
+        </Form.Group>
+        <Form.Group className="my-2">
           <Form.Control type="submit" />
         </Form.Group>
       </Form>
     </FormContainer>
   );
 }
-export default ClaimCreate;
+export default FileClaim;

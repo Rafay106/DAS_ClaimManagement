@@ -9,6 +9,7 @@ import stateRoutes from "./routes/stateRoutes.js";
 import claimStatusRoutes from "./routes/claimStatusRoutes.js";
 import designationRoutes from "./routes/designationRoutes.js";
 import claimRoutes from "./routes/claimRoutes.js";
+import userRoutes from "./routes/userRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -28,6 +29,7 @@ app.use("/api/state", stateRoutes);
 app.use("/api/claim-status", claimStatusRoutes);
 app.use("/api/designation", designationRoutes);
 app.use("/api/claim", claimRoutes);
+app.use("/api/user", userRoutes);
 
 app.get("/", (req, res) => res.send("Envirement is set to Development"));
 
