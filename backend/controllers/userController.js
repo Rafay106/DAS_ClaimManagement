@@ -2,8 +2,7 @@ import asyncHandler from "express-async-handler";
 import { selectUserById } from "../service/user.js";
 
 const getUserById = asyncHandler(async (req, res) => {
-  console.log(req.body);
-  const userID = parseInt(req.body.user_id);
+  const userID = parseInt(req.params.id);
   if (!userID) {
     res.status(400);
     throw new Error("user_id is required!");

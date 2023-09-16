@@ -6,7 +6,10 @@ import FormContainer from "../components/FormContainer";
 
 function FileClaim() {
   const navigate = useNavigate();
-  const [err, setErr] = useState("");
+  const [user, setUser] = useState({});
+  const [userId, setUserId] = useState();
+  const [isUserId, setIsUserId] = useState(false);
+  // const [err, setErr] = useState("");
   const [inputs, setInputs] = useState({});
   const [cities, setCities] = useState([]);
 
@@ -16,25 +19,39 @@ function FileClaim() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const userIdFormHandler = (e) => {
+    e.preventDefault();
+    axios
+      .get(`/api/user/${userId}`)
+      .then((res) => {
+        setUser(res.data);
+        setIsUserId(true);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(inputs);
-    if (true) {
-      const claim = {
-        emp_name: inputs.ename,
-        emp_number: inputs.enumber,
-        claim_for: inputs.claimFor,
-        bill_date: inputs.billDate,
-        amt: inputs.amt,
-        place: inputs.place,
-      };
-      axios.post("/api/claim", claim).then((res) => {
-        if (res.data.message === "Post Created") {
+    const claim = {
+      ename: user.name,
+      // enumber: inputs.enumber,
+      claimFor: inputs.claimFor,
+      billDate: inputs.billDate,
+      amt: parseFloat(inputs.amt),
+      place: parseInt(inputs.place),
+      claimerId: parseInt(user.employee_id),
+      comment: inputs.comment,
+    };
+    axios
+      .post("/api/claim", claim)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.message === "created") {
           navigate("/");
-        } else setErr(res.data.message);
-        console.log(err);
-      });
-    } else setErr("Category is required!");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -43,71 +60,101 @@ function FileClaim() {
 
   return (
     <FormContainer>
-      <h1>File Claim Form</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group className="my-2">
-          <Form.Control
-            type="text"
-            name="ename"
-            placeholder="Enter Employee Name"
-            onChange={inputsHandler}
-          />
-        </Form.Group>
-        <Form.Group className="my-2">
-          <Form.Control
-            type="text"
-            name="enumber"
-            placeholder="Enter Employee Number"
-            onChange={inputsHandler}
-          />
-        </Form.Group>
-        <Form.Group className="my-2">
-          <Form.Control
-            type="text"
-            name="claimFor"
-            placeholder="Claim For?"
-            onChange={inputsHandler}
-          />
-        </Form.Group>
-        <Form.Group className="my-2">
-          <Form.Control
-            type="date"
-            name="billDate"
-            // placeholder="Claim For?"
-            onChange={inputsHandler}
-          />
-        </Form.Group>
-        <Form.Group className="my-2">
-          <Form.Control
-            type="number"
-            name="amt"
-            placeholder="Enter amount"
-            onChange={inputsHandler}
-          />
-        </Form.Group>
-        <Form.Group className="my-2">
-          <Form.Select name="place" onChange={inputsHandler}>
-            <option>Select City</option>
-            {cities.map((city) => (
-              <option key={city.id} value={city.id}>
-                {city.name}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-        <Form.Group className="my-2">
-          <Form.Control
-            as="textarea"
-            name="comment"
-            placeholder="Enter comment"
-            onChange={inputsHandler}
-          />
-        </Form.Group>
-        <Form.Group className="my-2">
-          <Form.Control type="submit" />
-        </Form.Group>
-      </Form>
+      {!isUserId && (
+        <Form onSubmit={userIdFormHandler}>
+          <Form.Group className="my-2">
+            <Form.Control
+              type="text"
+              name="user_id"
+              placeholder="Enter your user id"
+              onChange={(e) => setUserId(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="my-2">
+            <Form.Control
+              className="btn btn-primary"
+              type="submit"
+              value="Find User"
+            />
+          </Form.Group>
+        </Form>
+      )}
+      {isUserId && (
+        <>
+          <h1>File Claim Form</h1>
+          <Form onSubmit={submitHandler}>
+            <Form.Group className="my-2">
+              <Form.Control
+                type="text"
+                name="ename"
+                placeholder="Enter Employee Name"
+                value={user.name}
+                disabled
+              />
+            </Form.Group>
+            {/* <Form.Group className="my-2">
+              <Form.Control
+                type="text"
+                name="enumber"
+                placeholder="Enter Employee Number"
+                onChange={inputsHandler}
+              />
+            </Form.Group> */}
+            <Form.Group className="my-2">
+              <Form.Control
+                type="text"
+                name="claimFor"
+                placeholder="Claim For?"
+                onChange={inputsHandler}
+              />
+            </Form.Group>
+            <Form.Group className="my-2">
+              <Form.Control
+                type="date"
+                name="billDate"
+                // placeholder="Claim For?"
+                onChange={inputsHandler}
+              />
+            </Form.Group>
+            <Form.Group className="my-2">
+              <Form.Control
+                type="number"
+                step="0.01"
+                name="amt"
+                placeholder="Enter amount"
+                onChange={inputsHandler}
+              />
+            </Form.Group>
+            <Form.Group className="my-2">
+              <Form.Select name="place" onChange={inputsHandler}>
+                <option>Select City</option>
+                {cities.map((city) => (
+                  <option key={city.id} value={city.id}>
+                    {city.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+            <Form.Group className="my-2">
+              <Form.Control
+                as="textarea"
+                name="comment"
+                placeholder="Enter comment"
+                onChange={inputsHandler}
+              />
+            </Form.Group>
+            <Form.Group className="my-2">
+              <Form.Control
+                className="btn btn-danger"
+                type="submit"
+                value="Sumbit Claim For Approval"
+              />
+            </Form.Group>
+          </Form>
+        </>
+      )}
     </FormContainer>
   );
 }
+
 export default FileClaim;

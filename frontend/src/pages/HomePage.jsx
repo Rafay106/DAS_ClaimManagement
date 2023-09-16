@@ -6,8 +6,8 @@ import AddUserCard from "../components/AddUserCard";
 
 const HomePage = () => {
   return (
-    <>
-      <Row>
+    <div className="w-50 mx-auto">
+      <Row className="justify-content-md-center mt-5">
         <Col className="m-2">
           <FileClaimCard />
         </Col>
@@ -23,7 +23,7 @@ const HomePage = () => {
           <AddEmployeeCard />
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 export default HomePage;

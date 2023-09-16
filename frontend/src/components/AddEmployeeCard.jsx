@@ -8,7 +8,7 @@ function AddEmployeeCard() {
         <Card.Title>Add Employee</Card.Title>
         <Card.Text>Create a new employee</Card.Text>
         <LinkContainer to="/">
-          <Button className="btn btn-primary">Add</Button>
+          <Button className="btn btn-primary w-100">Add</Button>
         </LinkContainer>
       </Card.Body>
     </Card>

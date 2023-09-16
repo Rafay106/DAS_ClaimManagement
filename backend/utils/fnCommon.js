@@ -15,4 +15,8 @@ function getDateTime(str = false) {
   return res;
 }
 
-export { getDateTime };
+function sortFactory(prop) {
+  return (a, b) => a[prop].localeCompare(b[prop]);
+}
+
+export { getDateTime, sortFactory };
