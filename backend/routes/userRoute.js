@@ -3,6 +3,6 @@ const router = express.Router();
 
 import { getUserById } from "../controllers/userController.js";
 
-router.post("/", getUserById);
+router.get("/:id", getUserById);
 
 export default router;

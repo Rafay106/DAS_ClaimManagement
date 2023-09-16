@@ -8,7 +8,7 @@ function ApproveClaimCard() {
         <Card.Title>Approve Claim</Card.Title>
         <Card.Text>Approve a new claim</Card.Text>
         <LinkContainer to="/claim/approve">
-          <Button className="btn btn-success">Approve</Button>
+          <Button className="btn btn-success w-100">Approve</Button>
         </LinkContainer>
       </Card.Body>
     </Card>
