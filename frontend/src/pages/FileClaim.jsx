@@ -7,7 +7,7 @@ import FormContainer from "../components/FormContainer";
 function FileClaim() {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState(false);
   const [isUserId, setIsUserId] = useState(false);
   // const [err, setErr] = useState("");
   const [inputs, setInputs] = useState({});

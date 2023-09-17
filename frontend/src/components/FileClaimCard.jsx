@@ -7,10 +7,12 @@ function FileClaimCard() {
       <Card.Body className="mx-auto">
         <Card.Title>File Claim</Card.Title>
         <Card.Text>Create a new claim</Card.Text>
+      </Card.Body>
+      <Card.Footer>
         <LinkContainer to="/claim/create">
           <Button className="btn btn-danger w-100">Add</Button>
         </LinkContainer>
-      </Card.Body>
+      </Card.Footer>
     </Card>
   );
 }

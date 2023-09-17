@@ -7,10 +7,12 @@ function AddEmployeeCard() {
       <Card.Body className="mx-auto">
         <Card.Title>Add Employee</Card.Title>
         <Card.Text>Create a new employee</Card.Text>
+      </Card.Body>
+      <Card.Footer>
         <LinkContainer to="/">
           <Button className="btn btn-primary w-100">Add</Button>
         </LinkContainer>
-      </Card.Body>
+      </Card.Footer>
     </Card>
   );
 }
