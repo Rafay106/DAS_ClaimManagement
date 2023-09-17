@@ -38,9 +38,9 @@ function FileClaim() {
       // enumber: inputs.enumber,
       claimFor: inputs.claimFor,
       billDate: inputs.billDate,
-      amt: parseFloat(inputs.amt),
-      place: parseInt(inputs.place),
-      claimerId: parseInt(user.employee_id),
+      amt: inputs.amt,
+      place: inputs.place,
+      claimerId: user.employee_id,
       comment: inputs.comment,
     };
     axios
