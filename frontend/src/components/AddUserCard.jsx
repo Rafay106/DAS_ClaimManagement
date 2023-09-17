@@ -7,10 +7,12 @@ function AddUserCard() {
       <Card.Body className="mx-auto">
         <Card.Title>Add User</Card.Title>
         <Card.Text>Create a new user</Card.Text>
+      </Card.Body>
+      <Card.Footer>
         <LinkContainer to="/">
           <Button className="btn btn-primary w-100">Add</Button>
         </LinkContainer>
-      </Card.Body>
+      </Card.Footer>
     </Card>
   );
 }
