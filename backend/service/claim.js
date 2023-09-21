@@ -28,6 +28,24 @@ const serviceGetClaimsNotApproved = async (userID) => {
   return rows;
 };
 
+const serviceGetAllClaimsNotApproved = async () => {
+  const [rows] = await db.query(
+    `SELECT claim.id as claimId, 
+            claim.claim_for as claimFor, 
+            claim.bill_date as billDate, 
+            claim.amount as amt, 
+            claim_status.value as claimStatus,
+            employee.id as eid, 
+            employee.name as ename 
+    FROM claim, employee, designation, claim_status
+    WHERE claim.claimer_id = employee.id
+    AND employee.designation_id = designation.id
+    AND claim.status_id = claim_status.id`
+  );
+
+  return rows;
+}
+
 const serviceCreateClaim = async (claim) => {
   const [res] = await db.query(
     `INSERT INTO claim
@@ -46,4 +64,4 @@ const serviceCreateClaim = async (claim) => {
   return res;
 };
 
-export { serviceGetClaimsNotApproved, serviceCreateClaim };
+export { serviceGetClaimsNotApproved,serviceGetAllClaimsNotApproved, serviceCreateClaim };
