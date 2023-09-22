@@ -3,7 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 function AddEmployeeCard() {
   return (
-    <Card>
+    <Card className="bg-dark text-white">
       <Card.Body className="mx-auto">
         <Card.Title>Add Employee</Card.Title>
         <Card.Text>Create a new employee</Card.Text>
