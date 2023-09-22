@@ -3,7 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 function AddUserCard() {
   return (
-    <Card>
+    <Card className="bg-warning text-white">
       <Card.Body className="mx-auto">
         <Card.Title>Add User</Card.Title>
         <Card.Text>Create a new user</Card.Text>

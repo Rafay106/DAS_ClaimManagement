@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col, Table } from "react-bootstrap";
+import React, { useEffect, useState,PureComponent } from "react";
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+import { Row, Col, Table, Button, Container } from "react-bootstrap";
 import FileClaimCard from "../components/FileClaimCard";
 import ApproveClaimCard from "../components/ApproveClaimCard";
 import AddEmployeeCard from "../components/AddEmployeeCard";
@@ -10,73 +12,220 @@ const HomePage = () => {
   const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
-    // Replace this with your actual API call to fetch data from the database
-    // Example API call using fetch:
-    axios.get("/api/claim").then(res => {
-      console.log(res.data)
-      setTableData(res.data)
-    })
-    // fetch("/api/claim")
-    //   .then((response) => {
-    //     console.log(response.json())
-    //     response.json()}
-    //     )
-    //   .then((data) => setTableData(data))
-    //   .catch((error) => console.error("Error fetching data: ", error));
+    // Replace "/api/claim" with your actual API endpoint
+    axios.get("/api/claim")
+      .then((response) => {
+        setTableData(response.data); // Assuming the API response is an array of objects
+      })
+      .catch((error) => console.error("Error fetching data: ", error));
   }, []);
 
-  return (
-    <div className="mw-50 mx-auto">
-     <div className="mw-50 mx-auto">
-  <div className="d-flex  mt-5">
-    <div className="m-2">
-      <FileClaimCard />
-    </div>
-    <div className="m-2">
-      <ApproveClaimCard />
-    </div>
-    <div className="m-2">
-      <AddUserCard />
-    </div>
-    <div className="m-2">
-      <AddEmployeeCard />
-    </div>
-  </div>
-</div>
 
-      <h1>Form Claim Data </h1>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Claim For</th>
-            <th>Bill_date</th>
-            <th>Bill_no.</th>
-            <th>Amount</th>
-            <th>Submint Date</th>
-            <th>Place</th>
-            <th>Approved Date</th>
-            <th>Claimer Id</th>
-            <th>Approver Id</th>
-            <th>Status Id</th>
-            <th>Comment</th>
-            <th>Active Flag</th>
-            <th>Created</th>
-            {/* Add more columns as needed */}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((row, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{row.column1}</td>
-              <td>{row.column2}</td>
-              {/* Map more data fields to table columns as needed */}
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+  const data = [
+    {
+      name: 'Sunday',
+     Claim: 600,
+      Approved: 240,
+      pending : 100,
+      Clearification_required: 300,
+      amt: 240,
+    },
+    {
+      name: 'Monday',
+      Claim: 300,
+      Approved: 139,
+      pending : 50,
+      Clearification_required: 100,
+      amt: 221,
+    },
+    {
+      name: 'Tuesday',
+      Claim: 120,
+      Approved: 98,
+      pending : 10,
+      Clearification_required: 50,
+      amt: 22,
+    },
+    {
+      name: 'Wed.',
+      Claim: 478,
+      Approved: 390,
+      pending : 10,
+      Clearification_required: 130,
+      amt: 200,
+    },
+    {
+      name: 'Thursday',
+      Claim: 589,
+      Approved: 480,
+      pending : 100,
+      Clearification_required: 150,
+      amt: 218,
+    },
+    {
+      name: 'Friday',
+      Claim: 539,
+      Approved: 380,
+      pending : 100,
+      Clearification_required: 400,
+      amt: 250,
+    },
+    {
+      name: 'Saturday',
+      Claim: 649,
+      Approved: 430,
+      pending : 100,
+      Clearification_required: 100,
+      amt: 210,
+    },
+  ];
+  return (
+
+    
+   <Container>
+    <Row>
+      <h1>Claim Data</h1>
+      <Table bordered striped hover>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Claim For</th>
+      <th>Bill No.</th>
+      <th>Amount</th>
+      <th>Claimer Id</th>
+      <th>Approver Id</th>
+      <th>Status Id</th>
+      <th>Comment</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {tableData.map((row, index) => (
+      <tr key={row.id}>
+        <td>{row.id}</td>
+        <td>{row.claimFor}</td>
+        <td>{row.bill_no}</td>
+        <td>{row.amount}</td>
+        <td>{row.claimer_id}</td>
+        <td>{row.approver_id}</td>
+        <td>{row.status_id}</td>
+        <td>{row.active_flag}</td>
+        <td>
+          <div className="">
+            <div className="d-flex">
+              <div className="mr-2">
+                <Button variant="info">Approved</Button>
+              </div>
+              <div>
+                <Button variant="danger">Pending</Button>
+              </div>
+              <div>
+                <Button variant="success">Denied</Button>
+              </div>
+              <div>
+                <Button variant="dark">Clarification Required</Button>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</Table>
+
+      </Row>
+
+      <Row >
+
+<Col style={{ backgroundColor: "#F0F0F0" }}>
+<Row>
+<h1>File Claimed and Approved</h1>
+</Row>
+<ResponsiveContainer width="100%" height={300}>
+<BarChart
+width={500}
+height={300}
+data={data}
+margin={{
+  top: 5,
+  right: 30,
+  left: 20,
+  bottom: 5,
+}}
+>
+<CartesianGrid strokeDasharray="3 3" />
+<XAxis dataKey="name" />
+<YAxis />
+<Tooltip />
+<Legend />
+
+<Bar dataKey="Claim" fill="#82ca9d" />
+<Bar dataKey="Approved" fill="#8884d8" />
+</BarChart>
+</ResponsiveContainer>
+</Col>
+
+  <Col style={{ backgroundColor: "#F0F0F0" }}>
+  <Row>
+  <h1>File Claimed and Pending </h1>
+</Row>
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart
+        width={500}
+        height={300}
+        data={data}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        
+        <Bar dataKey="Claim" fill="#82ca9d" />
+        <Bar dataKey="pending" fill="#000000" />
+      </BarChart>
+    </ResponsiveContainer>
+  </Col>
+</Row>
+<Row>
+  <h1>File Claimed and Clarification Required</h1>
+  <Col style={{ backgroundColor: "#F0F0F0" }}>
+  <ResponsiveContainer width="50%" height={300}>
+      <BarChart
+        width={500}
+        height={300}
+        data={data}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        
+        <Bar dataKey="Claim" fill="#82ca9d" />
+        <Bar dataKey="Clearification_required" fill="#0000FF" />
+      </BarChart>
+    </ResponsiveContainer>
+  </Col>
+</Row>
+
+      </Container>
+   
+
+    
+
   );
 };
 
