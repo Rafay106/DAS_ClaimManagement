@@ -1,10 +1,12 @@
 import express from "express";
-import { getClaims, createClaim, getAllClaims } from "../controllers/claimController.js";
+import {
+  getClaims,
+  createClaim,
+  processClaim
+} from "../controllers/claimController.js";
 
 const router = express.Router();
 
-router.get("/:userID", getClaims);
-router.get("/", getAllClaims);
-router.post("/", createClaim);
+router.get("/", getClaims).post("/", createClaim).post("/process", processClaim);
 
 export default router;

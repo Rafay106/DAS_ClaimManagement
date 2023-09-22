@@ -1,29 +1,35 @@
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-
+import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 function NavScrollExample() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="/">Digital Automation System</Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>Digital Automation System</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: '100px' }}
+            style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/claim/create">File Claim</Nav.Link>
-            <Nav.Link href="/claim/approve">Approve Claim</Nav.Link>
-            <Nav.Link href="#">Add User </Nav.Link>
-            <Nav.Link href="#">Add Employee</Nav.Link>
-           
-           
+            <LinkContainer to="/">
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/claim/create">
+              <Nav.Link>File Claim</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/claim/approve">
+              <Nav.Link>Process Claim</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/">
+              <Nav.Link>Add User </Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/">
+              <Nav.Link>Add Employee</Nav.Link>
+            </LinkContainer>
           </Nav>
           <Form className="d-flex">
             <Form.Control
