@@ -1,50 +1,62 @@
 import db from "../config/db.js";
 import { getDateTime } from "../utils/fnCommon.js";
 
-const serviceGetClaimsNotApproved = async (userID) => {
+const serviceGetClaims = async (userId, statusId) => {
   const [[{ code }]] = await db.query(
     `SELECT designation.code FROM user, employee, designation
     WHERE user.employee_id = employee.id
     AND employee.designation_id = designation.id
-    AND user.id = ${parseInt(userID)}`
+    AND user.id = ${parseInt(userId)}`
   );
 
   const [rows] = await db.query(
-    `SELECT claim.id as claimId, 
+    `SELECT claim.id as claimId,
             claim.claim_for as claimFor, 
             claim.bill_date as billDate, 
             claim.amount as amt, 
             claim_status.value as claimStatus,
-            employee.id as eid, 
-            employee.name as ename 
-    FROM claim, employee, designation, claim_status
-    WHERE claim.claimer_id = employee.id
-    AND employee.designation_id = designation.id
+            claimer.name as claimer,
+            claim.comment
+    FROM claim, employee as claimer, designation, claim_status
+    WHERE claim.claimer_id = claimer.id
+    AND claimer.designation_id = designation.id
     AND claim.status_id = claim_status.id
     AND designation.code > ${code}
-    AND claim.status_id != 2`
+    AND claim.status_id = ${statusId}`
   );
 
   return rows;
 };
 
-const serviceGetAllClaimsNotApproved = async () => {
+const serviceGetAllClaims = async () => {
   const [rows] = await db.query(
     `SELECT claim.id as claimId, 
             claim.claim_for as claimFor, 
             claim.bill_date as billDate, 
             claim.amount as amt, 
             claim_status.value as claimStatus,
-            employee.id as eid, 
-            employee.name as ename 
-    FROM claim, employee, designation, claim_status
-    WHERE claim.claimer_id = employee.id
-    AND employee.designation_id = designation.id
+            claimer.name as claimer,
+            claim.comment
+    FROM claim, employee as claimer, designation, claim_status
+    WHERE claim.claimer_id = claimer.id
+    AND claimer.designation_id = designation.id
     AND claim.status_id = claim_status.id`
   );
 
   return rows;
-}
+};
+
+const serviceProcessClaim = async (claimId, userId, statusId) => {
+  const [res] = await db.query(
+    `SELECT approver.name, designation.code
+    FROM employee as approver, user, designation
+    WHERE user.id = approver.id
+    AND approver.designation_id = designation.id
+    AND user.id = ${userId}`
+  );
+  console.log(res)
+  return res;
+};
 
 const serviceCreateClaim = async (claim) => {
   const [res] = await db.query(
@@ -64,4 +76,4 @@ const serviceCreateClaim = async (claim) => {
   return res;
 };
 
-export { serviceGetClaimsNotApproved,serviceGetAllClaimsNotApproved, serviceCreateClaim };
+export { serviceGetClaims, serviceGetAllClaims, serviceCreateClaim, serviceProcessClaim };
