@@ -153,7 +153,8 @@ const HomePage = () => {
             Toggle Chart
           </Button>
           <ResponsiveContainer width="100%" height={300}>
-          <BarChart
+            {showChart ? (
+              <BarChart
                 width={500}
                 height={300}
                 data={data}
@@ -175,8 +176,9 @@ const HomePage = () => {
                 <Bar dataKey="pending" fill="#000000" />
                 <Bar dataKey="Clearification_required" fill="#0000FF" />
               </BarChart>
-            {/* {showChart && (<div><h1>Hello</h1></div>)} */}
-            {undefined}
+            ) : (
+              <div></div>
+            )}
           </ResponsiveContainer>
         </Col>
       </Row>
