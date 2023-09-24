@@ -1,83 +1,83 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Card, Form } from "react-bootstrap";
+import { Container, Form, Table } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
+import { toast } from "react-toastify";
+import ClaimTable from "../components/ClaimTable";
+import ClaimTableFilters from "../components/ClaimTableFilters";
 
 const ApproveClaims = () => {
-  const [claims, setClaims] = useState([]);
+  const [claims, setClaims] = useState();
   const [claimStatus, setclaimStatus] = useState([]);
-  const [userID, setUserID] = useState("");
+  const [userId, setuserId] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
-    axios.get(`/api/claim/${userID}`).then((res) => {
+    axios.get(`/api/claim?user_id=${userId}&status_id=1`).then((res) => {
       setClaims(res.data);
-      console.log(res.data);
       axios.get("/api/claim-status").then((res) => {
-        console.log(res.data);
         setclaimStatus(res.data);
       });
     });
   };
 
+  const filterHandler = (e) => {
+    e.preventDefault();
+    axios
+      .get(`/api/claim?user_id=${userId}&status_id=${e.target.value}`)
+      .then((res) => setClaims(res.data))
+      .catch((err) => {
+        setClaims([]);
+        toast.error(err.response.data);
+      });
+  };
+
   return (
-    <FormContainer>
-      <h1>Process Claims</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group className="my-2" controlId="user-id">
-          <Form.Control
-            type="text"
-            name="userID"
-            placeholder="Enter your user id"
-            onChange={(e) => {
-              setUserID(e.target.value);
-            }}
-          />
-        </Form.Group>
-        <Form.Group className="my-2" controlId="emp-name">
-          <Form.Control type="submit" />
-        </Form.Group>
-      </Form>
-      <div>
-        {claims &&
-          claims.map((claim) => (
-            <Card key={claim.claimId} className="my-4">
-              <Card.Header className="w-100 d-flex justify-content-between">
-                <Card.Title>{claim.ename}</Card.Title>
-                <Card.Title>{claim.amt}</Card.Title>
-              </Card.Header>
-              <Card.Body className="mx-auto">
-                <Card.Title>Claim For: {claim.claimFor}</Card.Title>
-                <Card.Title>Bill Date: {claim.billDate}</Card.Title>
-                <Card.Title>Claim Amount: {claim.amt}</Card.Title>
-              </Card.Body>
-              <Card.Footer className="d-flex justify-content-between align-items-center">
-                <Card.Title>Current: {claim.claimStatus}</Card.Title>
-                <Card.Title className="d-flex align-items-center">
-                  <Form className="d-flex">
-                    <Form.Group className="m-2">
-                      <Form.Select name="place">
-                        {claimStatus.map((status) => (
-                          <option value={status.value} key={status.value}>
-                            {status.value}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group>
-                    <Form.Group className="my-2">
-                      <Form.Control
-                        className="btn btn-warning"
-                        type="submit"
-                        value="Update"
-                      />
-                    </Form.Group>
-                  </Form>
-                </Card.Title>
-              </Card.Footer>
-            </Card>
-          ))}
-      </div>
-    </FormContainer>
+    <>
+      <Container className="my-2">
+        <div className="my-3">
+          <h1 className="text-center">Process Claims</h1>
+        </div>
+        {!claims && (
+          <FormContainer>
+            <Form onSubmit={submitHandler}>
+              <Form.Group className="my-2" controlId="user-id">
+                <Form.Control
+                  type="text"
+                  name="userId"
+                  placeholder="Enter your user id"
+                  onChange={(e) => {
+                    setuserId(e.target.value);
+                  }}
+                />
+              </Form.Group>
+              <Form.Group className="my-2" controlId="emp-name">
+                <Form.Control
+                  type="submit"
+                  className="btn btn-primary"
+                  value="Find User"
+                />
+              </Form.Group>
+            </Form>
+          </FormContainer>
+        )}
+        <div className="text-center">
+          {claims && (
+            <>
+              <ClaimTableFilters
+                claimStatus={claimStatus}
+                filterHandler={filterHandler}
+              />
+              <ClaimTable
+                claims={claims}
+                claimStatus={claimStatus}
+                userId={userId}
+              />
+            </>
+          )}
+        </div>
+      </Container>
+    </>
   );
 };
 export default ApproveClaims;

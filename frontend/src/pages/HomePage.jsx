@@ -1,5 +1,15 @@
-import React, { useEffect, useState,PureComponent } from "react";
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useEffect, useState, PureComponent } from "react";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 import { Row, Col, Table, Button, Container } from "react-bootstrap";
 import FileClaimCard from "../components/FileClaimCard";
@@ -18,7 +28,8 @@ const HomePage = () => {
 
   useEffect(() => {
     // Replace "/api/claim" with your actual API endpoint
-    axios.get("/api/claim")
+    axios
+      .get("/api/claim")
       .then((response) => {
         setTableData(response.data); // Assuming the API response is an array of objects
       })
@@ -31,7 +42,7 @@ const HomePage = () => {
       name: 'Emp 1',
      Claim: 600,
       Approved: 240,
-      pending : 100,
+      pending: 100,
       Clearification_required: 300,
       amt: 240,
     },
@@ -39,7 +50,7 @@ const HomePage = () => {
       name: 'Emp 2',
       Claim: 300,
       Approved: 139,
-      pending : 50,
+      pending: 50,
       Clearification_required: 100,
       amt: 221,
     },
@@ -47,7 +58,7 @@ const HomePage = () => {
       name: 'Emp 3',
       Claim: 120,
       Approved: 98,
-      pending : 10,
+      pending: 10,
       Clearification_required: 50,
       amt: 22,
     },
@@ -55,7 +66,7 @@ const HomePage = () => {
       name: 'Emp 4',
       Claim: 478,
       Approved: 390,
-      pending : 10,
+      pending: 10,
       Clearification_required: 130,
       amt: 200,
     },
@@ -63,7 +74,7 @@ const HomePage = () => {
       name: 'Emp 5',
       Claim: 589,
       Approved: 480,
-      pending : 100,
+      pending: 100,
       Clearification_required: 150,
       amt: 218,
     },
@@ -71,7 +82,7 @@ const HomePage = () => {
       name: 'Emp 6',
       Claim: 539,
       Approved: 380,
-      pending : 100,
+      pending: 100,
       Clearification_required: 400,
       amt: 250,
     },
@@ -79,67 +90,62 @@ const HomePage = () => {
       name: 'Emp 7',
       Claim: 649,
       Approved: 430,
-      pending : 100,
+      pending: 100,
       Clearification_required: 100,
       amt: 210,
     },
   ];
+
   return (
-
-    
-   <Container>
-    <Row>
-      <h1>Claim Data</h1>
-      <Table bordered striped hover>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Claim For</th>
-      <th>Bill No.</th>
-      <th>Amount</th>
-      <th>Claimer Id</th>
-      <th>Approver Id</th>
-      <th>Status Id</th>
-      <th>Comment</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {tableData.map((row, index) => (
-      <tr key={row.id}>
-        <td>{row.id}</td>
-        <td>{row.claimFor}</td>
-        <td>{row.bill_no}</td>
-        <td>{row.amount}</td>
-        <td>{row.claimer_id}</td>
-        <td>{row.approver_id}</td>
-        <td>{row.status_id}</td>
-        <td>{row.active_flag}</td>
-        <td>
-          <div className="">
-            <div className="d-flex">
-              <div className="mr-2">
-                <Button variant="info">Approved</Button>
-              </div>
-              <div>
-                <Button variant="danger">Pending</Button>
-              </div>
-              <div>
-                <Button variant="success">Denied</Button>
-              </div>
-              <div>
-                <Button variant="dark">Clarification Required</Button>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</Table>
-
+    <Container>
+      <Row>
+        <h1>Claim Data</h1>
+        <Table bordered striped hover>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Claim For</th>
+              <th>Bill Date</th>
+              <th>Amount</th>
+              <th>Claimer</th>
+              <th>Status</th>
+              <th>Comment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableData.map((row, index) => (
+              <tr key={index}>
+                <td>{row.claimId}</td>
+                <td>{row.claimFor}</td>
+                <td>{row.billDate}</td>
+                <td>{row.amt}</td>
+                <td>{row.claimer}</td>
+                <td>{row.claimStatus}</td>
+                <td>{row.comment}</td>
+                <td>
+                  <div className="">
+                    <div className="d-flex justify-content-center gap-2">
+                      <div className="mr-2">
+                        <Button variant="info">Approved</Button>
+                      </div>
+                      <div>
+                        <Button variant="danger">Pending</Button>
+                      </div>
+                      <div>
+                        <Button variant="success">Denied</Button>
+                      </div>
+                      <div>
+                        <Button variant="dark">Clarification Required</Button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </Row>
-
       <Row >
 
 <Col style={{ backgroundColor: "#F0F0F0" }}>
@@ -179,14 +185,7 @@ margin={{
 
   
 </Row>
-
-
-      </Container>
-   
-
-    
-);
-  
+</Container>
 };
 
 export default HomePage;
