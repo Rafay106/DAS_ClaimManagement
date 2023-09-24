@@ -6,7 +6,7 @@ function NavScrollExample() {
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
         <LinkContainer to="/">
-          <Navbar.Brand>Digital Automation System</Navbar.Brand>
+          <img src="./images/DAS_Logo.png" alt="React Image" />
         </LinkContainer>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -29,6 +29,9 @@ function NavScrollExample() {
             </LinkContainer>
             <LinkContainer to="/">
               <Nav.Link>Add Employee</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/report">
+              <Nav.Link>Reports</Nav.Link>
             </LinkContainer>
           </Nav>
           <Form className="d-flex">
