@@ -8,4 +8,12 @@ const selectUserById = async (id) => {
   return user;
 };
 
-export { selectUserById };
+const selectUserByEmail = async (email) => {
+  const [[user]] = await db.query(`SELECT * FROM user WHERE email = '${email}'`);
+
+  if (!user) return false;
+
+  return user;
+};
+
+export { selectUserById, selectUserByEmail };

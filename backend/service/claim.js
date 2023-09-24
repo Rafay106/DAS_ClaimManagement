@@ -101,9 +101,32 @@ const serviceCreateClaim = async (claim) => {
   return res;
 };
 
+const serviceCountClaim = async () => {
+  const [[{ pending }]] = await db.query(
+    `SELECT count(*) AS pending FROM claim WHERE status_id=1`
+  );
+  const [[{ approved }]] = await db.query(
+    `SELECT count(*) AS approved FROM claim WHERE status_id=2`
+  );
+  const [[{ rejected }]] = await db.query(
+    `SELECT count(*) AS rejected FROM claim WHERE status_id=3`
+  );
+  const [[{ crpending }]] = await db.query(
+    `SELECT count(*) AS crpending FROM claim WHERE status_id=4`
+  );
+
+  return {
+    pending,
+    approved,
+    rejected,
+    crpending,
+  };
+};
+
 export {
   serviceGetClaims,
   serviceGetAllClaims,
   serviceCreateClaim,
   serviceProcessClaim,
+  serviceCountClaim,
 };

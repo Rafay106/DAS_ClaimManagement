@@ -1,27 +1,49 @@
-import React, { useEffect, useState, PureComponent } from "react";
-
-import { Row, Col, Table, Button, Container } from "react-bootstrap";
-import FileClaimCard from "../components/FileClaimCard";
-import ApproveClaimCard from "../components/ApproveClaimCard";
-import AddEmployeeCard from "../components/AddEmployeeCard";
-import AddUserCard from "../components/AddUserCard";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+import { Row, Col, Container } from "react-bootstrap";
+import ClaimStatusCard from "../components/ClaimStatusCard";
+import HomeCarousel from "../components/HomeCarousel";
 
 const HomePage = () => {
-  const [tableData, setTableData] = useState([]);
+  // const [tableData, setTableData] = useState([]);
+  const [claimCount, setClaimCount] = useState({});
 
   useEffect(() => {
+    // axios
+    //   .get("/api/claim")
+    //   .then((response) => {
+    //     setTableData(response.data);
+    //   })
+    //   .catch((error) => console.error("Error fetching data: ", error));
+
+    // Count claims
     axios
-      .get("/api/claim")
-      .then((response) => {
-        setTableData(response.data);
+      .get(`/api/claim/count`)
+      .then((res) => {
+        setClaimCount(res.data);
       })
-      .catch((error) => console.error("Error fetching data: ", error));
+      .catch((err) => console.log(err));
   }, []);
 
   return (
-    <Container>
+    <Container className="my-5">
+      <Row className="my-3">
+        <Col className="d-flex justify-content-center">
+          <HomeCarousel />
+        </Col>
+      </Row>
       <Row>
+        <Col>
+          <ClaimStatusCard
+            approved={claimCount.approved}
+            pending={claimCount.pending}
+            rejected={claimCount.rejected}
+            crpending={claimCount.crpending}
+          />
+        </Col>
+      </Row>
+      {/* <Row>
         <h1>Claim Data</h1>
         <Table bordered striped hover>
           <thead>
@@ -68,7 +90,7 @@ const HomePage = () => {
             ))}
           </tbody>
         </Table>
-      </Row>
+      </Row> */}
     </Container>
   );
 };
