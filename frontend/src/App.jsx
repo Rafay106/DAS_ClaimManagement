@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import 'react-circular-progressbar/dist/styles.css';
 
 import Header from "./components/Header";
 import ClaimPage from "./pages/ClaimPage";
@@ -10,6 +11,7 @@ import FileClaim from "./pages/FileClaim";
 import HomePage from "./pages/HomePage";
 import ProcessClaims from "./pages/ProcessClaims";
 import ReportPage from "./pages/ReportPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         {/* <Container className="my-2"> */}
         <Routes>
           <Route index element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/claim/:claimId" element={<ClaimPage />} />
           <Route path="/claim/create" element={<FileClaim />} />
           <Route path="/claim/process" element={<ProcessClaims />} />

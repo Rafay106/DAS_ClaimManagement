@@ -4,6 +4,7 @@ import {
   serviceGetClaims,
   serviceGetAllClaims,
   serviceProcessClaim,
+  serviceCountClaim,
 } from "../service/claim.js";
 import { getDateTime } from "../utils/fnCommon.js";
 
@@ -62,4 +63,10 @@ const createClaim = asyncHandler(async (req, res) => {
   }
 });
 
-export { getClaims, createClaim, processClaim };
+const countClaims = asyncHandler(async (req, res) => {
+  const result = await serviceCountClaim();
+  console.log(result)
+  res.status(200).json(result);
+});
+
+export { getClaims, createClaim, processClaim, countClaims };
