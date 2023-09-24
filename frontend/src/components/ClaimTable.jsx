@@ -1,28 +1,29 @@
 import axios from "axios";
 import { useState } from "react";
 import { Table, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { toast } from "react-toastify";
 
 function ClaimTable({ claims, claimStatus, userId }) {
-  const [statusId, setStatusId] = useState();
-
   const processClaimHandler = (e) => {
     e.preventDefault();
+    const statusId = e.target[1].value;
     if (statusId === "0") {
       toast.warn("Status can not be None");
     } else {
+      const claimId = e.target[0].value;
       axios
-        .post(`/api/claim/process`, { userId, statusId })
+        .post(`/api/claim/process`, { userId, claimId, statusId })
         .then((res) => {
-          console.log(res.data);
+          if (res.status === 200) {
+            toast.success(res.data);
+          }
         })
         .catch((err) => toast.error(err.response.data));
     }
   };
   return (
-    <Table className="m-auto" striped hover>
+    <Table className="m-auto" striped hover bordered>
       <thead>
         <tr>
           <th>Sr No</th>
@@ -32,6 +33,7 @@ function ClaimTable({ claims, claimStatus, userId }) {
           <th>Claimer</th>
           <th>Comment</th>
           <th>Current Status</th>
+          <th>Update Status</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -40,13 +42,17 @@ function ClaimTable({ claims, claimStatus, userId }) {
           claims.map((claim, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <LinkContainer to={`/claim/${claim.claimId}`} style={{cursor:'pointer'}}>
+              <LinkContainer
+                to={`/claim/${claim.claimId}`}
+                style={{ cursor: "pointer" }}
+              >
                 <td>{claim.claimFor}</td>
               </LinkContainer>
               <td>{claim.billDate}</td>
               <td>{claim.amt}</td>
               <td>{claim.claimer}</td>
               <td>{claim.comment}</td>
+              <td>{claim.claimStatus}</td>
               <td colSpan={2}>
                 <Form
                   className="d-flex justify-content-around"
@@ -61,11 +67,7 @@ function ClaimTable({ claims, claimStatus, userId }) {
                     />
                   </Form.Group>
                   <Form.Group className="m-2">
-                    <Form.Select
-                      name="status"
-                      onChange={(e) => setStatusId(e.target.value)}
-                      value={statusId ?? claim.claimStatusId}
-                    >
+                    <Form.Select name="status" defaultValue>
                       <option value="0">None</option>
                       {claimStatus.map((status) => (
                         <option value={status.id} key={status.value}>

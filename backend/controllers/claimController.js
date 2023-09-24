@@ -38,11 +38,14 @@ const processClaim = asyncHandler(async (req, res) => {
   const claimId = req.body.claimId;
   const userId = req.body.userId;
   const statusId = req.body.statusId;
-  console.log("claimId", claimId);
-  console.log("userId", userId);
-  console.log("statusId", statusId);
-  const resp = await serviceProcessClaim(claimId, userId, statusId);
-  res.send("OK");
+  const result = await serviceProcessClaim(claimId, userId, statusId);
+  if (result.statusCode === 401) {
+    res.status(401).send(result.message);
+  } else if (result.statusCode === 200 && result.affectedRows > 0) {
+    res.status(200).send("Updated Successfully");
+  } else {
+    res.status(500).json(result);
+  }
 });
 
 // @desc Create a Claim
