@@ -5,9 +5,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Header from "./components/Header";
+import ClaimPage from "./pages/ClaimPage";
 import FileClaim from "./pages/FileClaim";
 import HomePage from "./pages/HomePage";
-import ApproveClaims from "./pages/ApproveClaims";
+import ProcessClaims from "./pages/ProcessClaims";
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
         {/* <Container className="my-2"> */}
           <Routes>
             <Route index element={<HomePage />} />
+            <Route path="/claim/:claimId" element={<ClaimPage />} />
             <Route path="/claim/create" element={<FileClaim />} />
-            <Route path="/claim/approve" element={<ApproveClaims />} />
+            <Route path="/claim/process" element={<ProcessClaims />} />
           </Routes>
         {/* </Container> */}
         <ToastContainer />

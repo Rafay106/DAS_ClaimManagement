@@ -21,7 +21,7 @@ function NavScrollExample() {
             <LinkContainer to="/claim/create">
               <Nav.Link>File Claim</Nav.Link>
             </LinkContainer>
-            <LinkContainer to="/claim/approve">
+            <LinkContainer to="/claim/process">
               <Nav.Link>Process Claim</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/">
