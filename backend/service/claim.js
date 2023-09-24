@@ -14,6 +14,7 @@ const serviceGetClaims = async (userId, statusId) => {
             claim.claim_for as claimFor, 
             claim.bill_date as billDate, 
             claim.amount as amt, 
+            claim_status.id as claimStatusId,
             claim_status.value as claimStatus,
             claimer.name as claimer,
             claim.comment

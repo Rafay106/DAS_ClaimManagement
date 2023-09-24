@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import ClaimTable from "../components/ClaimTable";
 import ClaimTableFilters from "../components/ClaimTableFilters";
 
-const ApproveClaims = () => {
+const ProcessClaims = () => {
   const [claims, setClaims] = useState();
   const [claimStatus, setclaimStatus] = useState([]);
   const [userId, setuserId] = useState("");
@@ -19,6 +19,7 @@ const ApproveClaims = () => {
         setclaimStatus(res.data);
       });
     });
+    console.log(claims)
   };
 
   const filterHandler = (e) => {
@@ -80,4 +81,4 @@ const ApproveClaims = () => {
     </>
   );
 };
-export default ApproveClaims;
+export default ProcessClaims;

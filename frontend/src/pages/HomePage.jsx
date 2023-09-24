@@ -20,34 +20,32 @@ import axios from "axios";
 
 const HomePage = () => {
   const [tableData, setTableData] = useState([]);
-  // const [showChart, setShowChart] = useState(false);
+  const [showChart, setShowChart] = useState(false);
 
-  // const toggleChart = () => {
-  //   setShowChart(!showChart); // Toggle chart visibility when the button is clicked
-  // };
+  const toggleChart = () => {
+    setShowChart(!showChart); // Toggle chart visibility when the button is clicked
+  };
 
   useEffect(() => {
-    // Replace "/api/claim" with your actual API endpoint
     axios
       .get("/api/claim")
       .then((response) => {
-        setTableData(response.data); // Assuming the API response is an array of objects
+        setTableData(response.data);
       })
       .catch((error) => console.error("Error fetching data: ", error));
   }, []);
 
-
   const data = [
     {
-      name: 'Emp 1',
-     Claim: 600,
+      name: "Emp 1",
+      Claim: 600,
       Approved: 240,
       pending: 100,
       Clearification_required: 300,
       amt: 240,
     },
     {
-      name: 'Emp 2',
+      name: "Emp 2",
       Claim: 300,
       Approved: 139,
       pending: 50,
@@ -55,7 +53,7 @@ const HomePage = () => {
       amt: 221,
     },
     {
-      name: 'Emp 3',
+      name: "Emp 3",
       Claim: 120,
       Approved: 98,
       pending: 10,
@@ -63,7 +61,7 @@ const HomePage = () => {
       amt: 22,
     },
     {
-      name: 'Emp 4',
+      name: "Emp 4",
       Claim: 478,
       Approved: 390,
       pending: 10,
@@ -71,7 +69,7 @@ const HomePage = () => {
       amt: 200,
     },
     {
-      name: 'Emp 5',
+      name: "Emp 5",
       Claim: 589,
       Approved: 480,
       pending: 100,
@@ -79,7 +77,7 @@ const HomePage = () => {
       amt: 218,
     },
     {
-      name: 'Emp 6',
+      name: "Emp 6",
       Claim: 539,
       Approved: 380,
       pending: 100,
@@ -87,7 +85,7 @@ const HomePage = () => {
       amt: 250,
     },
     {
-      name: 'Emp 7',
+      name: "Emp 7",
       Claim: 649,
       Approved: 430,
       pending: 100,
@@ -146,46 +144,44 @@ const HomePage = () => {
           </tbody>
         </Table>
       </Row>
-      <Row >
-
-<Col style={{ backgroundColor: "#F0F0F0" }}>
-<Row>
-<h1>File Claimed and Approved</h1>
-</Row>
-{/* <Button variant="primary" onClick={toggleChart}>
+      <Row>
+        <Col style={{ backgroundColor: "#F0F0F0" }}>
+          <Row>
+            <h1>File Claimed and Approved</h1>
+          </Row>
+          <Button variant="primary" onClick={toggleChart}>
             Toggle Chart
-          </Button> */}
-<ResponsiveContainer width="100%" height={300}>
-{/* {showChart && ( 
-<BarChart
-width={500}
-height={300}
-data={data}
-margin={{
-  top: 5,
-  right: 30,
-  left: 20,
-  bottom: 5,
-}}
->
-<CartesianGrid strokeDasharray="3 3" />
-<XAxis dataKey="name" />
-<YAxis />
-<Tooltip />
-<Legend />
+          </Button>
+          <ResponsiveContainer width="100%" height={300}>
+          <BarChart
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
 
-<Bar dataKey="Claim" fill="#82ca9d" />
-<Bar dataKey="Approved" fill="#8884d8" />
-<Bar dataKey="pending" fill="#000000" />
-<Bar dataKey="Clearification_required" fill="#0000FF" />
-</BarChart>
-)} */}
-</ResponsiveContainer>
-</Col>
-
-  
-</Row>
-</Container>
+                <Bar dataKey="Claim" fill="#82ca9d" />
+                <Bar dataKey="Approved" fill="#8884d8" />
+                <Bar dataKey="pending" fill="#000000" />
+                <Bar dataKey="Clearification_required" fill="#0000FF" />
+              </BarChart>
+            {/* {showChart && (<div><h1>Hello</h1></div>)} */}
+            {undefined}
+          </ResponsiveContainer>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default HomePage;

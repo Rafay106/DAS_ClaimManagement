@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { Table, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { toast } from "react-toastify";
 
 function ClaimTable({ claims, claimStatus, userId }) {
-  const [statusId, setStatusId] = useState("0");
+  const [statusId, setStatusId] = useState();
 
   const processClaimHandler = (e) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ function ClaimTable({ claims, claimStatus, userId }) {
     }
   };
   return (
-    <Table className="m-auto">
+    <Table className="m-auto" striped hover>
       <thead>
         <tr>
           <th>Sr No</th>
@@ -28,8 +30,8 @@ function ClaimTable({ claims, claimStatus, userId }) {
           <th>Bill Date</th>
           <th>Amount</th>
           <th>Claimer</th>
-          <th>Status</th>
           <th>Comment</th>
+          <th>Current Status</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -38,19 +40,31 @@ function ClaimTable({ claims, claimStatus, userId }) {
           claims.map((claim, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{claim.claimFor}</td>
+              <LinkContainer to={`/claim/${claim.claimId}`} style={{cursor:'pointer'}}>
+                <td>{claim.claimFor}</td>
+              </LinkContainer>
               <td>{claim.billDate}</td>
               <td>{claim.amt}</td>
               <td>{claim.claimer}</td>
-              <td>{claim.claimStatus}</td>
               <td>{claim.comment}</td>
-              <td>
-                <Form className="d-flex" onSubmit={processClaimHandler}>
+              <td colSpan={2}>
+                <Form
+                  className="d-flex justify-content-around"
+                  onSubmit={processClaimHandler}
+                >
+                  <Form.Group>
+                    <Form.Control
+                      name="claimId"
+                      value={claim.claimId}
+                      hidden
+                      readOnly
+                    />
+                  </Form.Group>
                   <Form.Group className="m-2">
                     <Form.Select
                       name="status"
                       onChange={(e) => setStatusId(e.target.value)}
-                      value={statusId}
+                      value={statusId ?? claim.claimStatusId}
                     >
                       <option value="0">None</option>
                       {claimStatus.map((status) => (
@@ -62,9 +76,9 @@ function ClaimTable({ claims, claimStatus, userId }) {
                   </Form.Group>
                   <Form.Group className="my-2">
                     <Form.Control
-                      className="btn btn-warning"
+                      className="btn btn-success"
                       type="submit"
-                      value="Update"
+                      value="Done"
                     />
                   </Form.Group>
                 </Form>
