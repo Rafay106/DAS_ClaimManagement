@@ -48,15 +48,39 @@ const serviceGetAllClaims = async () => {
 };
 
 const serviceProcessClaim = async (claimId, userId, statusId) => {
-  const [res] = await db.query(
-    `SELECT approver.name, designation.code
+  const [[approver]] = await db.query(
+    `SELECT approver.id as approverId, designation.code
     FROM employee as approver, user, designation
     WHERE user.id = approver.id
     AND approver.designation_id = designation.id
     AND user.id = ${userId}`
   );
-  console.log(res)
-  return res;
+
+  const [[claimer]] = await db.query(
+    `SELECT claimer.id as claimerId, designation.code
+    FROM claim, employee as claimer, designation
+    WHERE claim.id = ${claimId}
+    AND claim.claimer_id = claimer.id
+    AND claimer.designation_id = designation.id`
+  );
+
+  if (approver.code >= claimer.code) {
+    return {
+      statusCode: 401,
+      message: "You are not authorized to process this claim",
+    };
+  }
+
+  const [res] = await db.query(
+    `UPDATE claim
+    SET status_id = ${parseInt(statusId)}, approver_id = ${approver.approverId}
+    WHERE id = ${claimId}`
+  );
+
+  return {
+    statusCode: 200,
+    affectedRows: res.affectedRows,
+  };
 };
 
 const serviceCreateClaim = async (claim) => {
@@ -77,4 +101,9 @@ const serviceCreateClaim = async (claim) => {
   return res;
 };
 
-export { serviceGetClaims, serviceGetAllClaims, serviceCreateClaim, serviceProcessClaim };
+export {
+  serviceGetClaims,
+  serviceGetAllClaims,
+  serviceCreateClaim,
+  serviceProcessClaim,
+};

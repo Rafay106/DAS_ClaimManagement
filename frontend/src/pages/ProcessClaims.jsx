@@ -13,14 +13,14 @@ const ProcessClaims = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    axios.get(`/api/claim?user_id=${userId}&status_id=1`).then((res) => {
+    axios.get(`/api/claim?user_id=${userId}`).then((res) => {
       setClaims(res.data);
       axios.get("/api/claim-status").then((res) => {
         setclaimStatus(res.data);
       });
     });
-    console.log(claims)
   };
+
 
   const filterHandler = (e) => {
     e.preventDefault();
@@ -68,6 +68,7 @@ const ProcessClaims = () => {
               <ClaimTableFilters
                 claimStatus={claimStatus}
                 filterHandler={filterHandler}
+                refreshHandler={submitHandler}
               />
               <ClaimTable
                 claims={claims}

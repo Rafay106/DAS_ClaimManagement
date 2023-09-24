@@ -1,23 +1,33 @@
 import axios from "axios";
-import { Form } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-function ClaimTableFilters({ claimStatus, filterHandler }) {
+function ClaimTableFilters({ claimStatus, filterHandler, refreshHandler }) {
   return (
-    <Form className="">
-      <Form.Group
-        className="my-2 d-flex justify-content-end"
-        controlId="filter"
-      >
-        <Form.Select className="w-25" name="filter" onChange={filterHandler}>
-          <option value={0}>All</option>
-          {claimStatus.map((status) => (
-            <option value={status.id} key={status.value}>
-              {status.value}
-            </option>
-          ))}
-        </Form.Select>
-      </Form.Group>
+    <Form className="mb-3 w-100">
+      <Row>
+        <Col>
+          <Form.Group className="" controlId="filter">
+            <Form.Select
+              className="w-25"
+              name="filter"
+              onChange={filterHandler}
+            >
+              <option value={0}>All</option>
+              {claimStatus.map((status) => (
+                <option value={status.id} key={status.value}>
+                  {status.value}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+        </Col>
+        <Col className="d-flex justify-content-end">
+          <Form.Group>
+            <Button onClick={refreshHandler}>Refresh</Button>
+          </Form.Group>
+        </Col>
+      </Row>
     </Form>
   );
 }
