@@ -29,22 +29,33 @@ const serviceGetClaims = async (userId, statusId) => {
   return rows;
 };
 
-const serviceGetAllClaims = async () => {
+const serviceGetAllClaims = async (userId) => {
+  const [[user]] = await db.query(
+    `SELECT designation.code FROM user, employee, designation
+    WHERE user.employee_id = employee.id
+    AND employee.designation_id = designation.id
+    AND user.id = ${parseInt(userId)}`
+  );
+
+  if (!user) return { statusCode: 404, body: "User not found!" };
+
   const [rows] = await db.query(
-    `SELECT claim.id as claimId, 
+    `SELECT claim.id as claimId,
             claim.claim_for as claimFor, 
             claim.bill_date as billDate, 
             claim.amount as amt, 
+            claim_status.id as claimStatusId,
             claim_status.value as claimStatus,
             claimer.name as claimer,
             claim.comment
     FROM claim, employee as claimer, designation, claim_status
     WHERE claim.claimer_id = claimer.id
     AND claimer.designation_id = designation.id
-    AND claim.status_id = claim_status.id`
+    AND claim.status_id = claim_status.id
+    AND designation.code > ${user.code}`
   );
 
-  return rows;
+  return { statusCode: 200, body: rows };
 };
 
 const serviceProcessClaim = async (claimId, userId, statusId) => {
