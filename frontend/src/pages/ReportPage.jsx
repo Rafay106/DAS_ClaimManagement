@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import {
   BarChart,
   Bar,
@@ -13,6 +13,41 @@ import {
 } from "recharts";
 
 function ReportPage() {
+  const claimData = [
+    {
+      date: "2023-09-17",
+      total: 6,
+      approved: 1,
+      pending: 3,
+      rejected: 1,
+      crpending: 1,
+    },
+    {
+      date: "2023-09-18",
+      total: 10,
+      approved: 3,
+      pending: 3,
+      rejected: 2,
+      crpending: 2,
+    },
+    {
+      date: "2023-09-19",
+      total: 5,
+      approved: 3,
+      pending: 0,
+      rejected: 2,
+      crpending: 0,
+    },
+    {
+      date: "2023-09-20",
+      total: 7,
+      approved: 3,
+      pending: 1,
+      rejected: 2,
+      crpending: 1,
+    },
+  ];
+
   const data = [
     {
       name: "Emp 1",
@@ -71,38 +106,119 @@ function ReportPage() {
       amt: 210,
     },
   ];
+
   return (
     <Container>
       <Row>
         <Col>
-          <Row>
-            <h1>File Claimed and Approved</h1>
-          </Row>
-
-          <ResponsiveContainer width="50%" height={300}>
-            <BarChart
-              width={500}
-              height={300}
-              data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-
-              <Bar dataKey="Claim" fill="#82ca9d" />
-              <Bar dataKey="Approved" fill="#8884d8" />
-              <Bar dataKey="pending" fill="#000000" />
-              <Bar dataKey="Clearification_required" fill="#0000FF" />
-            </BarChart>
-          </ResponsiveContainer>
+          <Card>
+            <Card.Header>
+              <Card.Title>Approved</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <BarChart
+                width={500}
+                height={300}
+                data={claimData}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="approved" fill="#56bb56" />
+              </BarChart>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <Card.Header>
+              <Card.Title>Rejected</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <BarChart
+                width={500}
+                height={300}
+                data={claimData}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="rejected" fill="#ec6161" />
+              </BarChart>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Card>
+            <Card.Header>
+              <Card.Title>Pending</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <BarChart
+                width={500}
+                height={300}
+                data={claimData}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="pending" fill="#f9c360" />
+              </BarChart>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <Card>
+            <Card.Header>
+              <Card.Title>Clarification Pending</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <BarChart
+                width={500}
+                height={300}
+                data={claimData}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="crpending" fill="gray" />
+              </BarChart>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>

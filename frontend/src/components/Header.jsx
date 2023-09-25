@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 
 function NavScrollExample() {
   return (
-    <div>
+    <div className="mb-3">
       <Navbar bg="light" variant="light" expand="lg" collapseOnSelect>
         <Container className="w-100 d-flex justify-content-between">
           <Navbar.Brand>
@@ -69,7 +69,7 @@ function NavScrollExample() {
           </div>
         </Container>
       </Navbar>
-      <Navbar sticky="top" bg="primary" variant="dark" expand="sm" collapseOnSelect>
+      <Navbar bg="primary" variant="dark" expand="sm" collapseOnSelect>
         <Container>
           <Nav fill variant="underline" defaultActiveKey="/">
             <Nav.Item>

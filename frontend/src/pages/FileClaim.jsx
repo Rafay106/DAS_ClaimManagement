@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
+import { toast } from "react-toastify";
 
 function FileClaim() {
   const navigate = useNavigate();
@@ -48,10 +49,11 @@ function FileClaim() {
       .then((res) => {
         console.log(res.data);
         if (res.data.message === "created") {
-          navigate("/");
+          toast.success("Claim Filed Successfully")
+          setInputs({})
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err.response.data));
   };
 
   useEffect(() => {
@@ -60,6 +62,7 @@ function FileClaim() {
 
   return (
     <FormContainer>
+      <h1>File a Claim</h1>
       {!isUserId && (
         <Form onSubmit={userIdFormHandler}>
           <Form.Group className="my-2">
@@ -80,19 +83,17 @@ function FileClaim() {
         </Form>
       )}
       {isUserId && (
-        <>
-          <h1>File Claim Form</h1>
-          <Form onSubmit={submitHandler}>
-            <Form.Group className="my-2">
-              <Form.Control
-                type="text"
-                name="ename"
-                placeholder="Enter Employee Name"
-                value={user.name}
-                disabled
-              />
-            </Form.Group>
-            {/* <Form.Group className="my-2">
+        <Form onSubmit={submitHandler}>
+          <Form.Group className="my-2">
+            <Form.Control
+              type="text"
+              name="ename"
+              placeholder="Enter Employee Name"
+              value={user.name}
+              disabled
+            />
+          </Form.Group>
+          {/* <Form.Group className="my-2">
               <Form.Control
                 type="text"
                 name="enumber"
@@ -100,58 +101,64 @@ function FileClaim() {
                 onChange={inputsHandler}
               />
             </Form.Group> */}
-            <Form.Group className="my-2">
-              <Form.Control
-                type="text"
-                name="claimFor"
-                placeholder="Claim For?"
-                onChange={inputsHandler}
-              />
-            </Form.Group>
-            <Form.Group className="my-2">
-              <Form.Control
-                type="date"
-                name="billDate"
-                // placeholder="Claim For?"
-                onChange={inputsHandler}
-              />
-            </Form.Group>
-            <Form.Group className="my-2">
-              <Form.Control
-                type="number"
-                step="0.01"
-                name="amt"
-                placeholder="Enter amount"
-                onChange={inputsHandler}
-              />
-            </Form.Group>
-            <Form.Group className="my-2">
-              <Form.Select name="place" onChange={inputsHandler}>
-                <option>Select City</option>
-                {cities.map((city) => (
-                  <option key={city.id} value={city.id}>
-                    {city.name}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-            <Form.Group className="my-2">
-              <Form.Control
-                as="textarea"
-                name="comment"
-                placeholder="Enter comment"
-                onChange={inputsHandler}
-              />
-            </Form.Group>
-            <Form.Group className="my-2">
-              <Form.Control
-                className="btn btn-danger"
-                type="submit"
-                value="Sumbit Claim For Approval"
-              />
-            </Form.Group>
-          </Form>
-        </>
+          <Form.Group className="my-2">
+            <Form.Control
+              type="text"
+              name="claimFor"
+              placeholder="Claim For?"
+              onChange={inputsHandler}
+            />
+          </Form.Group>
+          <Form.Group className="my-2">
+            <Form.Control
+              type="date"
+              name="billDate"
+              // placeholder="Claim For?"
+              onChange={inputsHandler}
+            />
+          </Form.Group>
+          <Form.Group className="my-2">
+            <Form.Control
+              type="number"
+              step="0.01"
+              name="amt"
+              placeholder="Enter amount"
+              onChange={inputsHandler}
+            />
+          </Form.Group>
+          <Form.Group className="my-2">
+            <Form.Select name="place" onChange={inputsHandler}>
+              <option>Select City</option>
+              {cities.map((city) => (
+                <option key={city.id} value={city.id}>
+                  {city.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="my-2">
+            <Form.Control
+              type="file"
+              name="file"
+              onChange={inputsHandler}
+            />
+          </Form.Group>
+          <Form.Group className="my-2">
+            <Form.Control
+              as="textarea"
+              name="comment"
+              placeholder="Enter comment"
+              onChange={inputsHandler}
+            />
+          </Form.Group>
+          <Form.Group className="my-2">
+            <Form.Control
+              className="btn btn-danger"
+              type="submit"
+              value="Sumbit Claim For Approval"
+            />
+          </Form.Group>
+        </Form>
       )}
     </FormContainer>
   );
