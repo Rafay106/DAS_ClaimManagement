@@ -36,11 +36,9 @@ const ProcessClaims = () => {
   return (
     <>
       <Container className="my-2">
-        <div className="my-3">
-          <h1 className="text-center">Process Claims</h1>
-        </div>
         {!claims && (
           <FormContainer>
+            <h1>Process Claims</h1>
             <Form onSubmit={submitHandler}>
               <Form.Group className="my-2" controlId="user-id">
                 <Form.Control

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import ClaimStatusCard from "../components/ClaimStatusCard";
 import HomeCarousel from "../components/HomeCarousel";
+import ClaimGraph from "../components/ClaimGraph";
 
 const HomePage = () => {
   // const [tableData, setTableData] = useState([]);
@@ -27,11 +28,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <Container className="my-5">
-      <Row className="my-3">
-        <Col className="d-flex justify-content-center">
-        </Col>
-      </Row>
+    <Container className="d-flex flex-column gap-3">
       <Row>
         <Col>
           <ClaimStatusCard
@@ -40,6 +37,11 @@ const HomePage = () => {
             rejected={claimCount.rejected}
             crpending={claimCount.crpending}
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ClaimGraph />
         </Col>
       </Row>
       {/* <Row>
