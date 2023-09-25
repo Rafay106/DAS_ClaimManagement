@@ -17,19 +17,30 @@ const getClaims = asyncHandler(async (req, res) => {
   // console.log("userId :>> ", userId);
   // console.log("statusId :>> ", statusId);
   let claims;
-  if (userId && statusId && statusId !== "0") {
+  if (!userId) {
+    res.status(400);
+    throw new Error("User id is required!");
+  }
+
+  if (statusId && statusId !== "0") {
     claims = await serviceGetClaims(parseInt(userId), parseInt(statusId));
   } else {
-    claims = await serviceGetAllClaims();
+    claims = await serviceGetAllClaims(parseInt(userId));
   }
-  for (const claim of claims) {
-    claim.billDate = claim.billDate.toISOString().split("T")[0];
+
+  if (claims.statusCode === 404) {
+    res.status(404);
+    throw new Error(claims.body);
+  } else {
+    for (const claim of claims.body) {
+      claim.billDate = claim.billDate.toISOString().split("T")[0];
+    }
+    if (claims.length === 0) {
+      res.status(404).send("Claims not found!");
+      return;
+    }
+    res.status(200).json(claims.body);
   }
-  if (claims.length === 0) {
-    res.status(404).send("Claims not found!");
-    return;
-  }
-  res.status(200).json(claims);
 });
 
 // @desc Process a Claim
@@ -65,7 +76,7 @@ const createClaim = asyncHandler(async (req, res) => {
 
 const countClaims = asyncHandler(async (req, res) => {
   const result = await serviceCountClaim();
-  console.log(result)
+  console.log(result);
   res.status(200).json(result);
 });
 

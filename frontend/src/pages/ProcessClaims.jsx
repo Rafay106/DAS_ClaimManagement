@@ -13,14 +13,19 @@ const ProcessClaims = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    axios.get(`/api/claim?user_id=${userId}`).then((res) => {
-      setClaims(res.data);
-      axios.get("/api/claim-status").then((res) => {
-        setclaimStatus(res.data);
-      });
-    });
+    axios
+      .get(`/api/claim?user_id=${userId}`)
+      .then((res) => {
+        setClaims(res.data);
+        axios
+          .get("/api/claim-status")
+          .then((res) => {
+            setclaimStatus(res.data);
+          })
+          .catch((err) => toast.error(err.response.data.message));
+      })
+      .catch((err) => toast.error(err.response.data.message));
   };
-
 
   const filterHandler = (e) => {
     e.preventDefault();
