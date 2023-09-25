@@ -30,7 +30,6 @@ const HomePage = () => {
     <Container className="my-5">
       <Row className="my-3">
         <Col className="d-flex justify-content-center">
-          <HomeCarousel />
         </Col>
       </Row>
       <Row>

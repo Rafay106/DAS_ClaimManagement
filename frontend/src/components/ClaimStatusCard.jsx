@@ -12,15 +12,17 @@ function ClaimStatusCard({ approved, pending, rejected, crpending }) {
       <Row>
         <Col>
           <Card>
-            <Card.Footer>Approved</Card.Footer>
             <Card.Body>
               <CircularProgressbar
                 value={approved}
                 maxValue={total}
-                text={approved}
+                text={`Approved ${approved}`}
+                strokeWidth={5}
                 styles={buildStyles({
                   textColor: "green",
+                  textSize: "10px",
                   pathColor: "green",
+                  strokeLinecap: "butt",
                 })}
               />
             </Card.Body>

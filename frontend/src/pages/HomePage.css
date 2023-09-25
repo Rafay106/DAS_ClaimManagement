@@ -1,8 +1,0 @@
-
-/* HomePagecss */
-
-.gradient-background {
-    background: linear-gradient(to right, #fcfcfc, #7fe2e7); /* Adjust the colors to your preference */
-    min-height: 100vh; /* Ensures the gradient covers the entire viewport height */
-  }
-  
