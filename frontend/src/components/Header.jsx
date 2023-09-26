@@ -62,6 +62,9 @@ function NavScrollExample() {
                     Dashboard
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
+                  <LinkContainer to="/login">
+                    <NavDropdown.Item>Login</NavDropdown.Item>
+                  </LinkContainer>
                   <NavDropdown.Item href="#logout">Logout</NavDropdown.Item>
                 </NavDropdown>
               </Nav>

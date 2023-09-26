@@ -3,14 +3,20 @@ import React, { useEffect, useState } from "react";
 
 import { Row, Col, Container } from "react-bootstrap";
 import ClaimStatusCard from "../components/ClaimStatusCard";
-import HomeCarousel from "../components/HomeCarousel";
 import ClaimGraph from "../components/ClaimGraph";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   // const [tableData, setTableData] = useState([]);
   const [claimCount, setClaimCount] = useState({});
+  const [userId, setUserId] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (document.cookie.includes("userId=")) {
+      const userId = document.cookie.split("=")[1];
+      setUserId(parseInt(userId));
+    } else navigate("/login");
     // axios
     //   .get("/api/claim")
     //   .then((response) => {
