@@ -38,8 +38,6 @@ function FileClaim() {
         if (res.data.message === "created") {
           toast.success("Claim Filed Successfully");
           setInputs({});
-          toast.success("Claim Filed Successfully");
-          setInputs({});
         }
       })
       .catch((err) => toast.error(err.response.data));
@@ -61,37 +59,17 @@ function FileClaim() {
   return (
     <FormContainer>
       <h1>File a Claim</h1>
-      {!isUserId && (
-        <Form onSubmit={userIdFormHandler}>
-          <Form.Group className="my-2">
-            <Form.Control
-              type="text"
-              name="user_id"
-              placeholder="Enter your user id"
-              onChange={(e) => setUserId(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="my-2">
-            <Form.Control
-              className="btn btn-primary"
-              type="submit"
-              value="Find User"
-            />
-          </Form.Group>
-        </Form>
-      )}
-      {isUserId && (
-        <Form onSubmit={submitHandler}>
-          <Form.Group className="my-2">
-            <Form.Control
-              type="text"
-              name="ename"
-              placeholder="Enter Employee Name"
-              value={user.name}
-              disabled
-            />
-          </Form.Group>
-          {/* <Form.Group className="my-2">
+      <Form onSubmit={submitHandler}>
+        <Form.Group className="my-2">
+          <Form.Control
+            type="text"
+            name="ename"
+            placeholder="Enter Employee Name"
+            value={user.name}
+            disabled
+          />
+        </Form.Group>
+        {/* <Form.Group className="my-2">
               <Form.Control
                 type="text"
                 name="enumber"
