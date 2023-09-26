@@ -1,8 +1,9 @@
 import asyncHandler from "express-async-handler";
 import {
-  serviceCreateClaim,
+  selectClaimById,
   serviceGetClaims,
   serviceGetAllClaims,
+  serviceCreateClaim,
   serviceProcessClaim,
   serviceCountClaim,
 } from "../service/claim.js";
@@ -43,6 +44,20 @@ const getClaims = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Get Claims
+// @route GET /api/claim/:claimId
+// @access Protected
+const getClaimById = asyncHandler(async (req, res) => {
+  const claimId = req.params.claimId;
+  const claim = await selectClaimById(claimId);
+  if (!claim) {
+    res.status(404);
+    throw new Error("Claim not found");
+  }
+  console.log(claim)
+  res.status(200).json(claim);
+});
+
 // @desc Process a Claim
 // @route POST /api/claim/process
 // @access Public
@@ -76,8 +91,7 @@ const createClaim = asyncHandler(async (req, res) => {
 
 const countClaims = asyncHandler(async (req, res) => {
   const result = await serviceCountClaim();
-  console.log(result);
   res.status(200).json(result);
 });
 
-export { getClaims, createClaim, processClaim, countClaims };
+export { getClaims, getClaimById, createClaim, processClaim, countClaims };

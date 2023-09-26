@@ -18,7 +18,7 @@ const getUserById = asyncHandler(async (req, res) => {
 });
 
 // @desc    Login user/set token
-// route    POST /api/users/login
+// route    POST /api/user/login
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -35,13 +35,20 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   if (password === user.pswd) {
-    generateToken(res, user.id);
-    res.status(200).json({
-      id: user.id,
-      code: user.code,
-      name: user.name,
-      email: user.email,
+    res.cookie("userId", user.id, {
+      // httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+      maxAge: 86400000, // One day in ms
     });
+    res.status(200).json({ body: "OK" });
+    // generateToken(res, user.id);
+    // res.status(200).json({
+    //   id: user.id,
+    //   code: user.code,
+    //   name: user.name,
+    //   email: user.email,
+    // });
   } else {
     res.status(400);
     throw new Error("Incorrect login details");
@@ -49,7 +56,7 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 // @desc    Logout user
-// route    POST /api/users/logout
+// route    POST /api/user/logout
 // @access  Private
 const logoutUser = (req, res) => {
   res.cookie("jwt", "", {

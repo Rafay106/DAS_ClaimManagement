@@ -1,13 +1,40 @@
 import db from "../config/db.js";
 import { getDateTime } from "../utils/fnCommon.js";
 
+const selectClaimById = async (claimId) => {
+  const [[claim]] = await db.query(
+    `SELECT claim.id,
+      claim_for as claimFor,
+      amount as amt,
+      submit_date as submitDate,
+      city.name as city,
+      approved_date as approvedDate,
+      claimer.name as claimer,
+      claimer.email as claimerEmail,
+      claim_status.value as status,
+      claim.comment
+    FROM claim, city, employee as claimer, claim_status
+    WHERE claim.place = city.id
+    AND claim.claimer_id = claimer.id
+    AND claim.status_id = claim_status.id
+    AND claim.id = ${claimId}`
+  );
+  console.log(claim);
+  return claim;
+};
+
 const serviceGetClaims = async (userId, statusId) => {
-  const [[{ code }]] = await db.query(
+  const [[user]] = await db.query(
     `SELECT designation.code FROM user, employee, designation
     WHERE user.employee_id = employee.id
     AND employee.designation_id = designation.id
     AND user.id = ${parseInt(userId)}`
   );
+  if (!user)
+    return {
+      statusCode: 404,
+      body: `User with id: ${userId} not found!`,
+    };
 
   const [rows] = await db.query(
     `SELECT claim.id as claimId,
@@ -22,11 +49,14 @@ const serviceGetClaims = async (userId, statusId) => {
     WHERE claim.claimer_id = claimer.id
     AND claimer.designation_id = designation.id
     AND claim.status_id = claim_status.id
-    AND designation.code > ${code}
+    AND designation.code > ${user.code}
     AND claim.status_id = ${statusId}`
   );
 
-  return rows;
+  return {
+    statusCode: 200,
+    body: rows,
+  };
 };
 
 const serviceGetAllClaims = async (userId) => {
@@ -135,6 +165,7 @@ const serviceCountClaim = async () => {
 };
 
 export {
+  selectClaimById,
   serviceGetClaims,
   serviceGetAllClaims,
   serviceCreateClaim,

@@ -6,29 +6,16 @@ import FormContainer from "../components/FormContainer";
 import { toast } from "react-toastify";
 
 function FileClaim() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState({});
-  const [userId, setUserId] = useState(false);
-  const [isUserId, setIsUserId] = useState(false);
+  const [user, setUser] = useState({ name: "" });
   // const [err, setErr] = useState("");
   const [inputs, setInputs] = useState({});
   const [cities, setCities] = useState([]);
+  const navigate = useNavigate();
 
   const inputsHandler = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
-  };
-
-  const userIdFormHandler = (e) => {
-    e.preventDefault();
-    axios
-      .get(`/api/user/${userId}`)
-      .then((res) => {
-        setUser(res.data);
-        setIsUserId(true);
-      })
-      .catch((err) => console.log(err));
   };
 
   const submitHandler = (e) => {
@@ -57,32 +44,21 @@ function FileClaim() {
   };
 
   useEffect(() => {
+    if (document.cookie.includes("userId=")) {
+      const userId = document.cookie.split("=")[1];
+      axios
+        .get(`/api/user/${userId}`)
+        .then((res) => {
+          setUser(res.data);
+        })
+        .catch((err) => err.response.data);
+    } else navigate("/login");
     axios.get("/api/city").then((res) => setCities(res.data));
   }, []);
 
   return (
     <FormContainer>
       <h1>File a Claim</h1>
-      {!isUserId && (
-        <Form onSubmit={userIdFormHandler}>
-          <Form.Group className="my-2">
-            <Form.Control
-              type="text"
-              name="user_id"
-              placeholder="Enter your user id"
-              onChange={(e) => setUserId(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="my-2">
-            <Form.Control
-              className="btn btn-primary"
-              type="submit"
-              value="Find User"
-            />
-          </Form.Group>
-        </Form>
-      )}
-
       <Form onSubmit={submitHandler}>
         <Form.Group className="my-2">
           <Form.Control
