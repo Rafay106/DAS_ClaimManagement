@@ -28,6 +28,22 @@ function ClaimStatusCard({ approved, pending, rejected, crpending }) {
               })}
             />
             <Card.Title style={{ color: "green" }}>
+              <u>Claimed</u>
+            </Card.Title>
+          </Card.Body>
+          <Card.Body className="d-flex flex-column align-items-center">
+            <CircularProgressbar
+              value={rejected}
+              maxValue={total}
+              text={`${rejected} / ${total}`}
+              strokeWidth={5}
+              styles={buildStyles({
+                textColor: "red",
+                textSize: "10px",
+                pathColor: "red",
+              })}
+            />
+            <Card.Title style={{ color: "green" }}>
               <u>Approved</u>
             </Card.Title>
           </Card.Body>

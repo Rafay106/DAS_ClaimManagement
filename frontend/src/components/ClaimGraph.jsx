@@ -55,7 +55,7 @@ function ClaimGraph() {
       <Card.Body>
         <LineChart
           width={1200}
-          height={600}
+          height={300}
           data={claimData}
           margin={{
             top: 5,
