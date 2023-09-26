@@ -19,12 +19,12 @@ import { Link } from "react-router-dom";
 function NavScrollExample() {
   return (
     <div className="mb-3">
-      <Navbar bg="light" variant="light" expand="lg" collapseOnSelect>
+      <Navbar bg="primary" variant="dark" expand="sm" collapseOnSelect>
         <Container className="w-100 d-flex justify-content-between">
           <Navbar.Brand>
             <LinkContainer to="/">
               <Nav.Link>
-                <img src="./images/DAS_Logo.png" alt="React Image" />
+                <img src="./images/DAS_Logo.jpeg" alt="React Image" />
               </Nav.Link>
             </LinkContainer>
           </Navbar.Brand>
@@ -36,6 +36,30 @@ function NavScrollExample() {
                 style={{ maxHeight: "100px" }}
                 navbarScroll
               >
+                <Container>
+                  <Nav fill variant="underline" defaultActiveKey="/">
+                    <Nav.Item>
+                      <LinkContainer to="/">
+                        <Nav.Link>Dashboard</Nav.Link>
+                      </LinkContainer>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <LinkContainer to="/claim/create">
+                        <Nav.Link eventKey="fc">File A Claim</Nav.Link>
+                      </LinkContainer>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <LinkContainer to="/claim/process">
+                        <Nav.Link eventKey="pc">Claim Details</Nav.Link>
+                      </LinkContainer>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <LinkContainer to="/report">
+                        <Nav.Link eventKey="r">Reports</Nav.Link>
+                      </LinkContainer>
+                    </Nav.Item>
+                  </Nav>
+                </Container>
                 <NavDropdown title={<FaBell />} id="navbarScrollingDropdown">
                   <LinkContainer to="/notification-1">
                     <NavDropdown.Item>Notification 1</NavDropdown.Item>
@@ -52,7 +76,7 @@ function NavScrollExample() {
                 <NavDropdown
                   title={
                     <span>
-                      <FaUser /> Username
+                      <FaUser /> Manish Kumar Mathur
                     </span>
                   }
                   id="navbarScrollingDropdown"
@@ -67,32 +91,6 @@ function NavScrollExample() {
               </Nav>
             </Navbar.Collapse>
           </div>
-        </Container>
-      </Navbar>
-      <Navbar bg="primary" variant="dark" expand="sm" collapseOnSelect>
-        <Container>
-          <Nav fill variant="underline" defaultActiveKey="/">
-            <Nav.Item>
-              <LinkContainer to="/">
-                <Nav.Link>Dashboard</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-            <Nav.Item>
-              <LinkContainer to="/claim/create">
-                <Nav.Link eventKey="fc">File Claim</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-            <Nav.Item>
-              <LinkContainer to="/claim/process">
-                <Nav.Link eventKey="pc">Process Claim</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-            <Nav.Item>
-              <LinkContainer to="/report">
-                <Nav.Link eventKey="r">Reports</Nav.Link>
-              </LinkContainer>
-            </Nav.Item>
-          </Nav>
         </Container>
       </Navbar>
     </div>
