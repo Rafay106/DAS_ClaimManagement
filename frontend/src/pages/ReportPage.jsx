@@ -13,6 +13,11 @@ import {
 } from "recharts";
 
 function ReportPage() {
+  const [selectedChart, setSelectedChart] = useState("rejected");
+
+  const handleButtonClick = (chartType) => {
+    setSelectedChart(chartType);
+  };
   const claimData = [
     {
       date: "2023-09-17",
@@ -110,39 +115,66 @@ function ReportPage() {
   return (
     <Container>
       <Row>
-        <Col>
-          <Card>
-            <Card.Header>
-              <Card.Title>Approved</Card.Title>
-            </Card.Header>
-            <Card.Body>
-              <BarChart
-                width={500}
-                height={300}
-                data={claimData}
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="approved" fill="#56bb56" />
-              </BarChart>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-            <Card.Header>
-              <Card.Title>Rejected</Card.Title>
-            </Card.Header>
-            <Card.Body>
+        <Card>
+          <Card.Header>
+            <Card.Title>Approved</Card.Title>
+          </Card.Header>
+          <Card.Body>
+            <BarChart
+              width={500}
+              height={300}
+              data={claimData}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="approved" fill="#56bb56" />
+            </BarChart>
+          </Card.Body>
+        </Card>
+      </Row>
+      <div className="d-flex" class="p-4">
+        <button
+          className="btn btn-danger mr-4" // Add the classes for color and spacing
+          onClick={() => handleButtonClick("rejected")}
+        >
+          Show Rejected Chart
+        </button>
+        <button
+          className="btn btn-primary mr-4" // Add the classes for color and spacing
+          onClick={() => handleButtonClick("pending")}
+        >
+          Show Pending Chart
+        </button>
+        <button
+          className="btn btn-dark" // Add the classes for color
+          onClick={() => handleButtonClick("crpending")}
+        >
+          Show Clarification Pending Chart
+        </button>
+      </div>
+
+      <Row>
+        <Card>
+          <Card.Header>
+            <Card.Title>
+              {selectedChart === "rejected"
+                ? "Rejected"
+                : selectedChart === "pending"
+                ? "Pending"
+                : "Clarification Pending"}
+            </Card.Title>
+          </Card.Header>
+          <Card.Body>
+            {selectedChart === "rejected" && (
               <BarChart
                 width={500}
                 height={300}
@@ -161,17 +193,8 @@ function ReportPage() {
                 <Legend />
                 <Bar dataKey="rejected" fill="#ec6161" />
               </BarChart>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Card>
-            <Card.Header>
-              <Card.Title>Pending</Card.Title>
-            </Card.Header>
-            <Card.Body>
+            )}
+            {selectedChart === "pending" && (
               <BarChart
                 width={500}
                 height={300}
@@ -190,15 +213,8 @@ function ReportPage() {
                 <Legend />
                 <Bar dataKey="pending" fill="#f9c360" />
               </BarChart>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card>
-            <Card.Header>
-              <Card.Title>Clarification Pending</Card.Title>
-            </Card.Header>
-            <Card.Body>
+            )}
+            {selectedChart === "crpending" && (
               <BarChart
                 width={500}
                 height={300}
@@ -217,9 +233,9 @@ function ReportPage() {
                 <Legend />
                 <Bar dataKey="crpending" fill="gray" />
               </BarChart>
-            </Card.Body>
-          </Card>
-        </Col>
+            )}
+          </Card.Body>
+        </Card>
       </Row>
     </Container>
   );

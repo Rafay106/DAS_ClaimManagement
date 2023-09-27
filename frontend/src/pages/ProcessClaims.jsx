@@ -58,6 +58,16 @@ const ProcessClaims = () => {
 
   return (
     <Container className="my-2">
+      <h1>My Data</h1>
+      <div className="text-center">
+        <ClaimTableFilters
+          claimStatus={claimStatus}
+          filterHandler={filterHandler}
+          refreshHandler={refreshHandler}
+        />
+        <ClaimTable claims={claims} claimStatus={claimStatus} userId={userId} />
+      </div>
+      <h1>Team Data</h1>
       <div className="text-center">
         <ClaimTableFilters
           claimStatus={claimStatus}
