@@ -1,4 +1,4 @@
-import db from "../config/db.js";
+const db = require("../config/db");
 
 const getAllClaimStatus = async () => {
   const [rows] = await db.query("SELECT id, value FROM claim_status");
@@ -6,4 +6,4 @@ const getAllClaimStatus = async () => {
   return rows;
 };
 
-export { getAllClaimStatus };
+module.exports = { getAllClaimStatus };

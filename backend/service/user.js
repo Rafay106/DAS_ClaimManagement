@@ -1,19 +1,19 @@
-import db from "../config/db.js";
+const db = require("../config/db");
 
-const selectUserById = async (id) => {
-  const [[user]] = await db.query("SELECT * FROM user WHERE id = " + id);
+const selectUserById = async (pk) => {
+  const {rows} = await db.query("SELECT * FROM users WHERE pk = " + pk);
 
-  if (!user) return false;
+  if (rows.length === 0) return false;
 
-  return user;
+  return rows[0];
 };
 
 const selectUserByEmail = async (email) => {
-  const [[user]] = await db.query(`SELECT * FROM user WHERE email = '${email}'`);
+  const {rows} = await db.query(`SELECT * FROM users WHERE email = '${email}'`);
 
-  if (!user) return false;
+  if (rows.length === 0) return false;
 
-  return user;
+  return rows[0];
 };
 
-export { selectUserById, selectUserByEmail };
+module.exports = { selectUserById, selectUserByEmail };

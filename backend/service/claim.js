@@ -1,26 +1,75 @@
-import db from "../config/db.js";
-import { getDateTime } from "../utils/fnCommon.js";
+const db = require("../config/db");
+const { getDateTime } = require("../utils/fnCommon");
 
 const selectClaimById = async (claimId) => {
   const [[claim]] = await db.query(
     `SELECT claim.id,
-      claim_for as claimFor,
-      amount as amt,
-      submit_date as submitDate,
+      claim.claim_for as claimFor,
+      claim.amount as amt,
+      claim.submit_date as submitDate,
       city.name as city,
-      approved_date as approvedDate,
+      claim.last_action_date as lastActionDate,
       claimer.name as claimer,
       claimer.email as claimerEmail,
       claim_status.value as status,
-      claim.comment
+      claim.comments,
+      claim.remarks
     FROM claim, city, employee as claimer, claim_status
     WHERE claim.place = city.id
     AND claim.claimer_id = claimer.id
     AND claim.status_id = claim_status.id
     AND claim.id = ${claimId}`
   );
-  console.log(claim);
+
   return claim;
+};
+
+const selectUserClaims = async (userId, statusId) => {
+  let query = `SELECT claim.id,
+                claim.claim_for AS claimFor,
+                claim.bill_date AS billDate,
+                claim.amount,
+                claim.submit_date AS submitDate,
+                city.name AS city,
+                claimer.name AS claimer,
+                claimer.email AS claimerEmail,
+                claim_status.value AS status,
+                claim.comments,
+                claim.remarks`;
+
+  if (statusId && statusId !== 0 && statusId === 4) {
+    query += `,
+              claim.last_action_date AS lastActionDate,
+              manager.name AS managerName,
+              manager.email AS managerEmail
+              FROM claim, city, employee as claimer, employee as manager, claim_status
+              WHERE claim.manager_id = manager.id
+              AND claim.place = city.id
+              AND claim.claimer_id = claimer.id
+              AND claim.status_id = claim_status.id
+              AND claimer.id = ${userId}`;
+  } else {
+    query += `
+              FROM claim, city, employee as claimer, claim_status
+              WHERE claim.place = city.id
+              AND claim.claimer_id = claimer.id
+              AND claim.status_id = claim_status.id
+              AND claimer.id = ${userId}`;
+  }
+  if (statusId && statusId !== 0) {
+    query += " AND claim.status_id = " + statusId;
+  }
+
+  query += " ORDER BY claim.submit_date DESC";
+
+  console.log("query: ", query);
+
+  const [claims] = await db.query(query);
+
+  console.log(claims);
+
+  if (claims.length > 0) return claims;
+  return false;
 };
 
 const serviceGetClaims = async (userId, statusId) => {
@@ -164,8 +213,9 @@ const serviceCountClaim = async () => {
   };
 };
 
-export {
+module.exports = {
   selectClaimById,
+  selectUserClaims,
   serviceGetClaims,
   serviceGetAllClaims,
   serviceCreateClaim,

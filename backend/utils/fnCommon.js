@@ -19,4 +19,4 @@ function sortFactory(prop) {
   return (a, b) => a[prop].localeCompare(b[prop]);
 }
 
-export { getDateTime, sortFactory };
+module.exports = { getDateTime, sortFactory };

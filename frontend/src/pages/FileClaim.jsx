@@ -43,18 +43,18 @@ function FileClaim() {
       .catch((err) => toast.error(err.response.data));
   };
 
-  useEffect(() => {
-    if (document.cookie.includes("userId=")) {
-      const userId = document.cookie.split("=")[1];
-      axios
-        .get(`/api/user/${userId}`)
-        .then((res) => {
-          setUser(res.data);
-        })
-        .catch((err) => err.response.data);
-    } else navigate("/login");
-    axios.get("/api/city").then((res) => setCities(res.data));
-  }, []);
+  // useEffect(() => {
+  //   if (document.cookie.includes("userId=")) {
+  //     const userId = document.cookie.split("=")[1];
+  //     axios
+  //       .get(`/api/user/${userId}`)
+  //       .then((res) => {
+  //         setUser(res.data);
+  //       })
+  //       .catch((err) => err.response.data);
+  //   } else navigate("/login");
+  //   axios.get("/api/city").then((res) => setCities(res.data));
+  // }, []);
 
   return (
     <FormContainer>

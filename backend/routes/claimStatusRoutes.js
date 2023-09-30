@@ -1,7 +1,7 @@
-import express from "express";
-import asyncHandler from "express-async-handler";
-import { getAllClaimStatus } from "../service/claimStatus.js";
-import { sortFactory } from "../utils/fnCommon.js";
+const express = require("express");
+const asyncHandler = require("express-async-handler");
+const { getAllClaimStatus } = require("../service/claimStatus");
+const { sortFactory } = require("../utils/fnCommon");
 
 const router = express.Router();
 
@@ -13,4 +13,4 @@ router.get(
   })
 );
 
-export default router;
+module.exports = router;
