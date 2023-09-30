@@ -1,7 +1,7 @@
-import express from "express";
-import asyncHandler from "express-async-handler";
-import { getAllCities, getCitiesByState } from "../service/city.js";
-import { sortFactory } from "../utils/fnCommon.js";
+const express = require("express");
+const asyncHandler = require("express-async-handler");
+const { getAllCities, getCitiesByState } = require("../service/city");
+const { sortFactory } = require("../utils/fnCommon");
 
 const router = express.Router();
 
@@ -21,4 +21,4 @@ router.get(
   })
 );
 
-export default router;
+module.exports = router;

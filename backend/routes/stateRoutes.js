@@ -1,6 +1,6 @@
-import express from "express";
-import asyncHandler from "express-async-handler";
-import { getAllStates } from "../service/state.js";
+const express = require("express");
+const asyncHandler = require("express-async-handler");
+const { getAllStates } = require("../service/state");
 
 const router = express.Router();
 
@@ -12,4 +12,4 @@ router.get(
   })
 );
 
-export default router;
+module.exports = router;

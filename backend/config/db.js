@@ -1,10 +1,10 @@
-import mysql from "mysql2/promise";
+const Pool = require("pg").Pool;
 
-const mysqlPool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "claim_management",
+const pool = new Pool({
+  user: String(process.env.DB_USER),
+  password: String(process.env.DB_PASS),
+  port: parseInt(process.env.DB_PORT),
+  database: String(process.env.DB_NAME),
 });
 
-export default mysqlPool;
+module.exports = pool;

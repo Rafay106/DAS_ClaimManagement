@@ -12,11 +12,11 @@ const HomePage = () => {
   const [userId, setUserId] = useState();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (document.cookie.includes("userId=")) {
-      const userId = document.cookie.split("=")[1];
-      setUserId(parseInt(userId));
-    } else navigate("/login");
+  // useEffect(() => {
+  //   if (document.cookie.includes("userId=")) {
+  //     const userId = document.cookie.split("=")[1];
+  //     setUserId(parseInt(userId));
+  //   } else navigate("/login");
     // axios
     //   .get("/api/claim")
     //   .then((response) => {
@@ -25,13 +25,13 @@ const HomePage = () => {
     //   .catch((error) => console.error("Error fetching data: ", error));
 
     // Count claims
-    axios
-      .get(`/api/claim/count`)
-      .then((res) => {
-        setClaimCount(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  //   axios
+  //     .get(`/api/claim/count`)
+  //     .then((res) => {
+  //       setClaimCount(res.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <Container className="d-flex flex-column gap-3">

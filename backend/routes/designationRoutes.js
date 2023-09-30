@@ -1,6 +1,6 @@
-import express from "express";
-import asyncHandler from "express-async-handler";
-import { getAllDesignation } from "../service/designation.js";
+const express = require("express");
+const asyncHandler = require("express-async-handler");
+const { getAllDesignation } = require("../service/designation");
 
 const router = express.Router();
 
@@ -12,4 +12,4 @@ router.get(
   })
 );
 
-export default router;
+module.exports = router;

@@ -1,6 +1,6 @@
-import asyncHandler from "express-async-handler";
-import { selectUserById, selectUserByEmail } from "../service/user.js";
-import generateToken from "../utils/generateToken.js";
+const asyncHandler = require("express-async-handler");
+const { selectUserById, selectUserByEmail } = require("../service/user");
+const generateToken = require("../utils/generateToken");
 
 const getUserById = asyncHandler(async (req, res) => {
   const userID = parseInt(req.params.id);
@@ -34,21 +34,13 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("User not found, please register");
   }
 
-  if (password === user.pswd) {
-    res.cookie("userId", user.id, {
-      // httpOnly: true,
-      secure: false,
-      sameSite: "strict",
-      maxAge: 86400000, // One day in ms
+  if (password === user.hash) {
+    generateToken(res, user.pk);
+    res.status(200).json({
+      pk: user.pk,
+      name: user.name,
+      email: user.email,
     });
-    res.status(200).json({ body: "OK" });
-    // generateToken(res, user.id);
-    // res.status(200).json({
-    //   id: user.id,
-    //   code: user.code,
-    //   name: user.name,
-    //   email: user.email,
-    // });
   } else {
     res.status(400);
     throw new Error("Incorrect login details");
@@ -66,4 +58,4 @@ const logoutUser = (req, res) => {
   res.status(200).json({ message: "User logged out." });
 };
 
-export { getUserById, loginUser, logoutUser };
+module.exports = { getUserById, loginUser, logoutUser };

@@ -1,4 +1,4 @@
-import db from "../config/db.js";
+const db = require("../config/db");
 
 const getAllCities = async () => {
   const [rows] = await db.query("SELECT id, name FROM city");
@@ -14,4 +14,4 @@ const getCitiesByState = async (stateID) => {
   return rows;
 };
 
-export { getAllCities, getCitiesByState };
+module.exports = { getAllCities, getCitiesByState };

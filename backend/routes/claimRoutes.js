@@ -1,11 +1,11 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   getClaims,
   getClaimById,
   createClaim,
   processClaim,
   countClaims,
-} from "../controllers/claimController.js";
+} = require("../controllers/claimController");
 
 const router = express.Router();
 
@@ -16,4 +16,4 @@ router
   .post("/", createClaim)
   .post("/process", processClaim);
 
-export default router;
+module.exports = router;

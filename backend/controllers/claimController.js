@@ -1,20 +1,21 @@
-import asyncHandler from "express-async-handler";
-import {
+const asyncHandler = require("express-async-handler");
+const {
   selectClaimById,
   serviceGetClaims,
   serviceGetAllClaims,
   serviceCreateClaim,
   serviceProcessClaim,
   serviceCountClaim,
-} from "../service/claim.js";
-import { getDateTime } from "../utils/fnCommon.js";
+  selectUserClaims,
+} = require("../service/claim");
+const { getDateTime } = require("../utils/fnCommon");
 
 // @desc Get Claims
-// @route GET /api/claim?user_id=&status_id= (query is optional)
+// @route POST /api/claim
 // @access Public
 const getClaims = asyncHandler(async (req, res) => {
-  const userId = req.query.user_id;
-  const statusId = req.query.status_id;
+  const userId = req.body.userId;
+  const statusId = req.body.statusId;
   // console.log("userId :>> ", userId);
   // console.log("statusId :>> ", statusId);
   let claims;
@@ -23,24 +24,21 @@ const getClaims = asyncHandler(async (req, res) => {
     throw new Error("User id is required!");
   }
 
-  if (statusId && statusId !== "0") {
-    claims = await serviceGetClaims(parseInt(userId), parseInt(statusId));
-  } else {
-    claims = await serviceGetAllClaims(parseInt(userId));
-  }
+  claims = await selectUserClaims(parseInt(userId), parseInt(statusId));
 
-  if (claims.statusCode === 404) {
-    res.status(404);
-    throw new Error(claims.body);
-  } else {
-    for (const claim of claims.body) {
+  // if (statusId && statusId !== "0") {
+  //   claims = await serviceGetClaims(parseInt(userId), parseInt(statusId));
+  // } else {
+  //   claims = await serviceGetAllClaims(parseInt(userId));
+  // }
+
+  if (claims) {
+    for (const claim of claims) {
       claim.billDate = claim.billDate.toISOString().split("T")[0];
     }
-    if (claims.length === 0) {
-      res.status(404).send("Claims not found!");
-      return;
-    }
     res.status(200).json(claims.body);
+  } else {
+    res.status(200).json({ body: "claim not found!" });
   }
 });
 
@@ -54,7 +52,7 @@ const getClaimById = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Claim not found");
   }
-  console.log(claim)
+  console.log(claim);
   res.status(200).json(claim);
 });
 
@@ -94,4 +92,10 @@ const countClaims = asyncHandler(async (req, res) => {
   res.status(200).json(result);
 });
 
-export { getClaims, getClaimById, createClaim, processClaim, countClaims };
+module.exports = {
+  getClaims,
+  getClaimById,
+  createClaim,
+  processClaim,
+  countClaims,
+};
