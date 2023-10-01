@@ -9,7 +9,7 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const cities = await getAllCities(req.params.stateID);
-    res.status(200).json(cities.sort(sortFactory("name")));
+    res.status(200).json(cities);
   })
 );
 

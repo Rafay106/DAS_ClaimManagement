@@ -16,27 +16,34 @@ const { getDateTime } = require("../utils/fnCommon");
 const getClaims = asyncHandler(async (req, res) => {
   const userId = req.body.userId;
   const statusId = req.body.statusId;
-  // console.log("userId :>> ", userId);
-  // console.log("statusId :>> ", statusId);
-  let claims;
   if (!userId) {
     res.status(400);
     throw new Error("User id is required!");
   }
 
-  claims = await selectUserClaims(parseInt(userId), parseInt(statusId));
+  const rows = await selectUserClaims(parseInt(userId), parseInt(statusId));
 
-  // if (statusId && statusId !== "0") {
-  //   claims = await serviceGetClaims(parseInt(userId), parseInt(statusId));
-  // } else {
-  //   claims = await serviceGetAllClaims(parseInt(userId));
-  // }
-
-  if (claims) {
-    for (const claim of claims) {
-      claim.billDate = claim.billDate.toISOString().split("T")[0];
+  const claims = [];
+  if (rows) {
+    for (const _ of rows) {
+      claims.push({
+        pk: _.pk,
+        claimFor: _.claim_for,
+        billDate: _.bill_date,
+        amount: _.amount,
+        submitDate: _.submit_date,
+        city: _.city,
+        claimer: _.claimer,
+        claimerEmail: _.claimer_email,
+        status: _.status,
+        comments: JSON.parse(_.comments),
+        remarks: JSON.parse(_.remarks),
+        lastActionDate: _.last_action_date,
+        manager: _.manager,
+        managerEmail: _.manager_email,
+      });
     }
-    res.status(200).json(claims.body);
+    res.status(200).json(claims);
   } else {
     res.status(200).json({ body: "claim not found!" });
   }

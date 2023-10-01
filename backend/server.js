@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use("/api/city", require("./routes/cityRoutes"));
 app.use("/api/state", require("./routes/stateRoutes"));
 app.use("/api/claim-status", require("./routes/claimStatusRoutes"));
-app.use("/api/designation", require("./routes/designationRoutes"));
+app.use("/api/user-type", require("./routes/userTypeRoutes"));
 app.use("/api/claim", require("./routes/claimRoutes"));
 app.use("/api/user", require("./routes/userRoute"));
 
