@@ -9,10 +9,10 @@ const protect = asyncHandler(async (req, res, next) => {
     res.status(401);
     throw new Error("Not authorized, no token!");
   } else {
-    let pk = jwt.verify(token, process.env.JWT_SECRET).userPk;
-    req.user = await db.query(
-      `SELECT pk, name, email FROM users WHERE pk = ${pk}`
-    );
+    let id = jwt.verify(token, process.env.JWT_SECRET).userId;
+    req.user = (
+      await db.query(`SELECT id, name, email FROM users WHERE id = ${id}`)
+    ).rows[0];
     next();
   }
 });

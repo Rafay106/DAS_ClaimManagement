@@ -14,14 +14,14 @@ const { getDateTime } = require("../utils/fnCommon");
 // @route POST /api/claim
 // @access Public
 const getClaims = asyncHandler(async (req, res) => {
-  const userId = req.body.userId;
+  const userId = req.user.id;
   const statusId = req.body.statusId;
   if (!userId) {
     res.status(400);
     throw new Error("User id is required!");
   }
 
-  const rows = await selectUserClaims(parseInt(userId), parseInt(statusId));
+  const rows = await selectUserClaims(userId, statusId);
 
   const claims = [];
   if (rows) {
@@ -36,8 +36,8 @@ const getClaims = asyncHandler(async (req, res) => {
         claimer: _.claimer,
         claimerEmail: _.claimer_email,
         status: _.status,
-        comments: JSON.parse(_.comments),
-        remarks: JSON.parse(_.remarks),
+        comments: _.comments,
+        remarks: _.remarks,
         lastActionDate: _.last_action_date,
         manager: _.manager,
         managerEmail: _.manager_email,

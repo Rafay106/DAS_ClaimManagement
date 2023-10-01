@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
-const selectUserById = async (pk) => {
-  const {rows} = await db.query("SELECT * FROM users WHERE pk = " + pk);
+const selectUserById = async (id) => {
+  const {rows} = await db.query("SELECT * FROM users WHERE id = " + id);
 
   if (rows.length === 0) return false;
 
