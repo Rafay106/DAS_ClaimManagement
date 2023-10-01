@@ -8,12 +8,13 @@ const {
 } = require("../controllers/claimController");
 
 const router = express.Router();
+const { protect } = require("../middleware/authMiddleware");
 
 router
-  .get("/", getClaims)
-  .get("/id/:claimId", getClaimById)
-  .get("/count", countClaims)
-  .post("/", createClaim)
-  .post("/process", processClaim);
+  .get("/", protect, getClaims)
+  .get("/id/:claimId", protect, getClaimById)
+  .get("/count", protect, countClaims)
+  .post("/", protect, createClaim)
+  .post("/process", protect, processClaim);
 
 module.exports = router;
