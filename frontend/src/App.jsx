@@ -1,36 +1,29 @@
-import "./App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import 'react-circular-progressbar/dist/styles.css';
+import FileClaim from "./pages/fileClaim/FileClaim";
 
-import Header from "./components/Header";
-import ClaimPage from "./pages/ClaimPage";
-import FileClaim from "./pages/FileClaim";
-import HomePage from "./pages/HomePage";
-import ProcessClaims from "./pages/ProcessClaims";
-import ReportPage from "./pages/ReportPage";
-import LoginPage from "./pages/LoginPage";
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import {
+  BrowserRouter as Router,
+  Route,
+  BrowserRouter,
+  Routes,
+} from "react-router-dom";
+import ProcessClaim from "./pages/processclaim/ProcessClaim";
 
 function App() {
   return (
-    <>
+    <div className="App">
       <BrowserRouter>
-        <Header />
-        {/* <Container className="my-2"> */}
         <Routes>
-          <Route index element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/claim/:claimId" element={<ClaimPage />} />
-          <Route path="/claim/create" element={<FileClaim />} />
-          <Route path="/claim/process" element={<ProcessClaims />} />
-          <Route path="/report" element={<ReportPage />} />
+          <Route path="/">
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="fileclaim" element={<FileClaim />} />
+            <Route path="processclaim" element={<ProcessClaim />} />
+          </Route>
         </Routes>
-        {/* </Container> */}
-        <ToastContainer />
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

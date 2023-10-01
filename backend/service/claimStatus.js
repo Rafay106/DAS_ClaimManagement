@@ -1,7 +1,7 @@
 const db = require("../config/db");
 
 const getAllClaimStatus = async () => {
-  const [rows] = await db.query("SELECT id, value FROM claim_status");
+  const {rows} = await db.query("SELECT pk, value FROM claim_status ORDER BY value");
 
   return rows;
 };

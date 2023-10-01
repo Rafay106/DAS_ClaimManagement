@@ -3,9 +3,9 @@ const { getDateTime } = require("../utils/fnCommon");
 
 const selectClaimById = async (claimId) => {
   const [[claim]] = await db.query(
-    `SELECT claim.id,
+    `SELECT claim.pk,
       claim.claim_for as claimFor,
-      claim.amount as amt,
+      claim.amount,
       claim.submit_date as submitDate,
       city.name as city,
       claim.last_action_date as lastActionDate,
@@ -15,60 +15,93 @@ const selectClaimById = async (claimId) => {
       claim.comments,
       claim.remarks
     FROM claim, city, employee as claimer, claim_status
-    WHERE claim.place = city.id
-    AND claim.claimer_id = claimer.id
-    AND claim.status_id = claim_status.id
-    AND claim.id = ${claimId}`
+    WHERE claim.place = city.pk
+    AND claim.claimer_id = claimer.pk
+    AND claim.status_id = claim_status.pk
+    AND claim.pk = ${claimId}`
   );
 
   return claim;
 };
 
 const selectUserClaims = async (userId, statusId) => {
-  let query = `SELECT claim.id,
-                claim.claim_for AS claimFor,
-                claim.bill_date AS billDate,
-                claim.amount,
-                claim.submit_date AS submitDate,
-                city.name AS city,
-                claimer.name AS claimer,
-                claimer.email AS claimerEmail,
-                claim_status.value AS status,
-                claim.comments,
-                claim.remarks`;
-
-  if (statusId && statusId !== 0 && statusId === 4) {
-    query += `,
-              claim.last_action_date AS lastActionDate,
-              manager.name AS managerName,
-              manager.email AS managerEmail
-              FROM claim, city, employee as claimer, employee as manager, claim_status
-              WHERE claim.manager_id = manager.id
-              AND claim.place = city.id
-              AND claim.claimer_id = claimer.id
-              AND claim.status_id = claim_status.id
-              AND claimer.id = ${userId}`;
+  let query;
+  if (statusId) {
+    if (statusId === 3) {
+      query = `
+        SELECT claim.pk,
+          claim.claim_for,
+          claim.bill_date,
+          claim.amount,
+          claim.submit_date,
+          city.name AS city,
+          claimer.name AS claimer,
+          claimer.email AS claimer_email,
+          claim_status.value AS status,
+          claim.comments,
+          claim.remarks,
+          FROM claim, city, employee as claimer, claim_status
+          WHERE claim.place = city.pk
+          AND claim.claimer_id = claimer.pk
+          AND claim.status_id = claim_status.pk
+          AND claim.manager_id = manager.pk
+          AND claimer.pk = ${userId}
+          AND claim.status_id = 3 ORDER BY claim.submit_date DESC`;
+    } else {
+      query = `
+        SELECT claim.pk,
+          claim.claim_for,
+          claim.bill_date,
+          claim.amount,
+          claim.submit_date,
+          city.name AS city,
+          claimer.name AS claimer,
+          claimer.email AS claimer_email,
+          claim_status.value AS status,
+          claim.comments,
+          claim.remarks,
+          claim.last_action_date,
+          manager.name AS manager,
+          manager.email AS manager_email
+          FROM claim, city, employee as claimer, employee as manager, claim_status
+          WHERE claim.place = city.pk
+          AND claim.claimer_id = claimer.pk
+          AND claim.status_id = claim_status.pk
+          AND claim.manager_id = manager.pk
+          AND claimer.pk = ${userId}
+          AND claim.status_id = ${statusId} ORDER BY claim.submit_date DESC`;
+    }
   } else {
-    query += `
-              FROM claim, city, employee as claimer, claim_status
-              WHERE claim.place = city.id
-              AND claim.claimer_id = claimer.id
-              AND claim.status_id = claim_status.id
-              AND claimer.id = ${userId}`;
+    query = `
+        SELECT claim.pk,
+          claim.claim_for,
+          claim.bill_date,
+          claim.amount,
+          claim.submit_date,
+          city.name AS city,
+          claimer.name AS claimer,
+          claimer.email AS claimer_email,
+          claim_status.value AS status,
+          claim.comments,
+          claim.remarks,
+          claim.last_action_date,
+          manager.name AS manager,
+          manager.email AS manager_email
+          FROM claim, city, employee as claimer, employee as manager, claim_status
+          WHERE claim.place = city.pk
+          AND claim.claimer_id = claimer.pk
+          AND claim.status_id = claim_status.pk
+          AND claim.manager_id = manager.pk
+          AND claimer.pk = ${userId} ORDER BY claim.submit_date DESC`;
   }
-  if (statusId && statusId !== 0) {
-    query += " AND claim.status_id = " + statusId;
-  }
-
-  query += " ORDER BY claim.submit_date DESC";
 
   console.log("query: ", query);
 
-  const [claims] = await db.query(query);
+  const { rows } = await db.query(query);
 
-  console.log(claims);
+  console.log(rows);
 
-  if (claims.length > 0) return claims;
+  if (rows.length > 0) return rows;
   return false;
 };
 
