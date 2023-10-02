@@ -1,9 +1,11 @@
 const asyncHandler = require("express-async-handler");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 const { selectUserById, selectUserByEmail } = require("../service/user");
 const generateToken = require("../utils/generateToken");
 
-
+// @desc    Login user/set token
+// route    POST /api/user/:id
+// @access  Private
 const getUserById = asyncHandler(async (req, res) => {
   const userID = parseInt(req.params.id);
   if (!userID) {
@@ -32,11 +34,12 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await selectUserByEmail(email);
 
   if (user && (await bcrypt.compare(password, user.hash))) {
-    generateToken(res, user.id);
     res.status(200).json({
       id: user.id,
       name: user.name,
       email: user.email,
+      type: user.type,
+      token: generateToken(res, user.id),
     });
   } else {
     res.status(400);

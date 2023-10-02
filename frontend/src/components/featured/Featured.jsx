@@ -5,7 +5,7 @@ import "react-circular-progressbar/dist/styles.css";
 import ArrowDownwardOutlinedIcon from "@mui/icons-material/ArrowDownwardOutlined";
 import ArrowUpwardOutlinedIcon from "@mui/icons-material/ArrowUpwardOutlined";
 
-const Featured = () => {
+const Featured = ({total}) => {
   return (
     <div className="featured">
       <div className="top">
@@ -14,10 +14,10 @@ const Featured = () => {
       </div>
       <div className="bottom">
         <div className="featuredChart">
-          <CircularProgressbar value={70} text={"70%"} strokeWidth={5} />
+          <CircularProgressbar value={total} text={"70%"} strokeWidth={5} />
         </div>
         <p className="title">Total Claims Received Today</p>
-        <p className="amount">4000</p>
+        <p className="amount">{total.amount}</p>
         <p className="desc">Previous claims may not be included.</p>
 
         <div className="summary">

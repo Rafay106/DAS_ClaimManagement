@@ -10,43 +10,34 @@ import TableRow from "@mui/material/TableRow";
 import SaveIcon from "@mui/icons-material/Save";
 
 const columns = [
-  { id: "Claim_Id", label: "Claim_Id", minWidth: 70 },
-  { id: "Name", label: "Name", minWidth: 70 },
+  { id: "id", label: "Claim_Id", minWidth: 70 },
+  { id: "claimer", label: "Name", minWidth: 70 },
   {
-    id: "Claim_For",
-    label: "Claim_For",
+    id: "claimFor",
+    label: "Claim For",
     minWidth: 80,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "Location",
-    label: "Location",
+    id: "city",
+    label: "Place",
     minWidth: 70,
     align: "right",
     format: (value) => value.toLocaleString("en-US"),
   },
   {
-    id: "Claim_amount",
-    label: "Claim_amount",
+    id: "amount",
+    label: "Amount",
     minWidth: 70,
     align: "right",
     format: (value) => value.toFixed(2),
   },
-
   {
-    id: "Claim_Status",
-    label: "Claim_Status",
+    id: "status",
+    label: "Status",
     minWidth: 70,
     align: "right",
-    format: (value) => value.toFixed(2),
-  },
-
-  {
-    id: "Action",
-    label: "Save",
-    minWidth: 70,
-    align: "center",
     format: (value) => value.toFixed(2),
   },
 ];
@@ -93,7 +84,7 @@ const rows = [
   createData("10", "Ankit", "Demo", "Kota", 10000, "Approved", <SaveIcon />),
 ];
 
-export default function ProcessTable() {
+export default function ProcessTable({ claims }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -129,7 +120,7 @@ export default function ProcessTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {claims
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (

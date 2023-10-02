@@ -151,7 +151,7 @@ VALUES
 		3,
 		'Rajswee',
 		'rajswee@gmail.com',
-		1,
+		2,
 		'$2b$10$LKgSl8XVqLd3LkFrNgYV2uT9ohtLFsjUACx1H45bbCR0oI5/cUq3G',
 		now ()
 	),
@@ -159,7 +159,7 @@ VALUES
 		4,
 		'Saloni Bhatnagar',
 		'saloni@gmail.com',
-		1,
+		3,
 		'$2b$10$LKgSl8XVqLd3LkFrNgYV2uT9ohtLFsjUACx1H45bbCR0oI5/cUq3G',
 		now ()
 	),
@@ -167,7 +167,7 @@ VALUES
 		5,
 		'Shreya Jain',
 		'shreya@gmail.com',
-		1,
+		3,
 		'$2b$10$LKgSl8XVqLd3LkFrNgYV2uT9ohtLFsjUACx1H45bbCR0oI5/cUq3G',
 		now ()
 	);

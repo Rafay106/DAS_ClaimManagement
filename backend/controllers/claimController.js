@@ -11,7 +11,7 @@ const {
 const { getDateTime } = require("../utils/fnCommon");
 
 // @desc Get Claims
-// @route POST /api/claim
+// @route GET /api/claim
 // @access Public
 const getClaims = asyncHandler(async (req, res) => {
   const userId = req.user.id;
@@ -27,22 +27,23 @@ const getClaims = asyncHandler(async (req, res) => {
   if (rows) {
     for (const _ of rows) {
       claims.push({
-        pk: _.pk,
+        id: _.id,
         claimFor: _.claim_for,
-        billDate: _.bill_date,
+        billDate: String(_.bill_date).slice(0, 10),
         amount: _.amount,
-        submitDate: _.submit_date,
+        submitDate: String(_.submit_date).slice(0, 10),
         city: _.city,
         claimer: _.claimer,
         claimerEmail: _.claimer_email,
         status: _.status,
         comments: _.comments,
         remarks: _.remarks,
-        lastActionDate: _.last_action_date,
-        manager: _.manager,
+        lastActionDate: String(_.last_action_date)?.slice(0, 10),
+        manager: String(_.manager),
         managerEmail: _.manager_email,
       });
     }
+    // console.log(claims);
     res.status(200).json(claims);
   } else {
     res.status(200).json({ body: "claim not found!" });
@@ -84,12 +85,12 @@ const processClaim = asyncHandler(async (req, res) => {
 // @route POST /api/claim
 // @access Public
 const createClaim = asyncHandler(async (req, res) => {
-  console.log(req.body);
   const result = await serviceCreateClaim(req.body);
-  if (result.affectedRows > 0) {
+  if (result.rowCount > 0) {
     res.status(201).json({ message: "created" });
   } else {
     res.status(500);
+    console.log(result)
     throw new Error("Data not inserted!!!");
   }
 });
