@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
 const db = require("../config/db");
+const { selectUserById } = require("../service/user");
 
 const protect = asyncHandler(async (req, res, next) => {
   let token;
@@ -10,9 +11,10 @@ const protect = asyncHandler(async (req, res, next) => {
     throw new Error("Not authorized, no token!");
   } else {
     let id = jwt.verify(token, process.env.JWT_SECRET).userId;
-    req.user = (
-      await db.query(`SELECT id, name, email FROM users WHERE id = ${id}`)
-    ).rows[0];
+    req.user = await selectUserById(id); 
+    // (
+    //   await db.query(`SELECT id, name, email FROM users WHERE id = ${id}`)
+    // ).rows[0];
     next();
   }
 });

@@ -33,31 +33,37 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    const a = claims.reduce((acc, claim) => {
-      if (claim.status === "Approved") {
-        return acc + 1;
-      } else return 0;
-    }, 0);
+    console.log(claims);
+    let a, p, cp, r, t;
+    a = p = cp = r = t = 0;
 
-    const p = claims.reduce((acc, claim) => {
-      if (claim.status === "Pending") {
-        return acc + 1;
-      } else return 0;
-    }, 0);
+    if (claims.length > 0) {
+      a = claims.reduce((acc, claim) => {
+        if (claim.status === "Approved") {
+          return acc + 1;
+        } else return 0;
+      }, 0);
 
-    const cp = claims.reduce((acc, claim) => {
-      if (claim.status === "Clarification Pending") {
-        return acc + 1;
-      } else return 0;
-    }, 0);
+      p = claims.reduce((acc, claim) => {
+        if (claim.status === "Pending") {
+          return acc + 1;
+        } else return 0;
+      }, 0);
 
-    const r = claims.reduce((acc, claim) => {
-      if (claim.status === "Rejected") {
-        return acc + 1;
-      } else return 0;
-    }, 0);
+      cp = claims.reduce((acc, claim) => {
+        if (claim.status === "Clarification Pending") {
+          return acc + 1;
+        } else return 0;
+      }, 0);
 
-    const t = a + p + cp + r;
+      r = claims.reduce((acc, claim) => {
+        if (claim.status === "Rejected") {
+          return acc + 1;
+        } else return 0;
+      }, 0);
+
+      t = a + p + cp + r;
+    }
 
     setClaimCount({
       a,
@@ -83,7 +89,9 @@ const Home = () => {
           <p>Latest Claims</p>
           <p>
             Total Amount:{" "}
-            {claims.reduce((acc, claim) => acc + parseFloat(claim.amount), 0)}
+            {claims.length > 0
+              ? claims.reduce((acc, claim) => acc + parseFloat(claim.amount), 0)
+              : 0}
           </p>
         </div>
         <Table claims={claims} />
@@ -91,7 +99,10 @@ const Home = () => {
       <div className="charts">
         <Featured
           total={{
-            amount: claims.reduce((a, c) => a + parseFloat(c.amount), 0),
+            amount:
+              claims.length > 0
+                ? claims.reduce((a, c) => a + parseFloat(c.amount), 0)
+                : 0,
             count: claimCount.t,
           }}
         />

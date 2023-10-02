@@ -1,6 +1,7 @@
 const express = require("express");
 const {
-  getClaims,
+  getUserClaims,
+  getTeamClaims,
   getClaimById,
   createClaim,
   processClaim,
@@ -11,9 +12,10 @@ const router = express.Router();
 const { protect } = require("../middleware/authMiddleware");
 
 router
-  .get("/", protect, getClaims)
+  .get("/", protect, getUserClaims)
+  .get("/team", protect, getTeamClaims)
   .get("/id/:claimId", protect, getClaimById)
-  .get("/count", protect, countClaims)
+  // .get("/count", protect, countClaims)
   .post("/", protect, createClaim)
   .post("/process", protect, processClaim);
 

@@ -61,6 +61,43 @@ const selectUserClaims = async (userId, statusId) => {
   return false;
 };
 
+const selectTeamClaims = async (user, statusId) => {
+  let query = `SELECT C.ID,
+                C.CLAIM_FOR,
+                C.BILL_DATE,
+                C.AMOUNT,
+                C.SUBMIT_DATE,
+                CI.NAME AS CITY,
+                C.LAST_ACTION_DATE,
+                CM.NAME AS CLAIMER,
+                CM.EMAIL AS CLAIMER_EMAIL,
+                MR.NAME AS MANAGER,
+                MR.EMAIL AS MANAGER_EMAIL,
+                CS.VALUE AS STATUS,
+                C.COMMENTS,
+                C.REMARKS,
+                I.name AS ISU,
+                D.name AS DU
+              FROM CLAIM C
+              JOIN CITY CI ON C.PLACE = CI.ID
+              JOIN EMPLOYEE CM ON C.CLAIMER_ID = CM.ID
+              LEFT JOIN EMPLOYEE MR ON C.MANAGER_ID = MR.ID
+              JOIN CLAIM_STATUS CS ON C.STATUS_ID = CS.ID
+              JOIN ISU I ON CM.ISU_ID = I.ID
+              JOIN DU D ON I.ID = D.ID
+              WHERE I.ID = ${user.isu_id}`;
+  if (statusId) query += ` AND CS.ID = ${statusId}`;
+
+  query += " ORDER BY C.SUBMIT_DATE DESC";
+
+  const { rows } = await db.query(query);
+  console.log(rows)
+
+  if (rows.length > 0) return rows;
+
+  return false;
+};
+
 const serviceGetClaims = async (userId, statusId) => {
   const [[user]] = await db.query(
     `SELECT designation.code FROM user, employee, designation
@@ -205,6 +242,7 @@ const serviceCountClaim = async () => {
 module.exports = {
   selectClaimById,
   selectUserClaims,
+  selectTeamClaims,
   serviceGetClaims,
   serviceGetAllClaims,
   serviceCreateClaim,

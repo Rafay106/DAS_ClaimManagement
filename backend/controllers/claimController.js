@@ -1,19 +1,21 @@
 const asyncHandler = require("express-async-handler");
 const {
+  selectUserClaims,
+  selectTeamClaims,
+
   selectClaimById,
   serviceGetClaims,
   serviceGetAllClaims,
   serviceCreateClaim,
   serviceProcessClaim,
   serviceCountClaim,
-  selectUserClaims,
 } = require("../service/claim");
 const { getDateTime } = require("../utils/fnCommon");
 
-// @desc Get Claims
-// @route GET /api/claim
+// @desc Get user's team claims
+// @route GET /api/claim/team
 // @access Public
-const getClaims = asyncHandler(async (req, res) => {
+const getUserClaims = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   const statusId = req.body.statusId;
   if (!userId) {
@@ -22,6 +24,45 @@ const getClaims = asyncHandler(async (req, res) => {
   }
 
   const rows = await selectUserClaims(userId, statusId);
+
+  const claims = [];
+  if (rows) {
+    for (const _ of rows) {
+      claims.push({
+        id: _.id,
+        claimFor: _.claim_for,
+        billDate: String(_.bill_date).slice(0, 10),
+        amount: _.amount,
+        submitDate: String(_.submit_date).slice(0, 10),
+        city: _.city,
+        claimer: _.claimer,
+        claimerEmail: _.claimer_email,
+        status: _.status,
+        comments: _.comments,
+        remarks: _.remarks,
+        lastActionDate: String(_.last_action_date)?.slice(0, 10),
+        manager: String(_.manager),
+        managerEmail: _.manager_email,
+      });
+    }
+    // console.log(claims);
+    res.status(200).json(claims);
+  } else {
+    res.status(200).json({ body: "claim not found!" });
+  }
+});
+
+// @desc Get user's claims
+// @route GET /api/claim
+// @access Public
+const getTeamClaims = asyncHandler(async (req, res) => {
+  const statusId = req.body.statusId;
+  if (req.user.type !== 'admin' && req.user.type !== 'sub-admin') {
+    res.status(401);
+    throw new Error("Not authorized to view team claims!");
+  }
+
+  const rows = await selectTeamClaims(req.user, statusId);
 
   const claims = [];
   if (rows) {
@@ -101,7 +142,8 @@ const countClaims = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  getClaims,
+  getUserClaims,
+  getTeamClaims,
   getClaimById,
   createClaim,
   processClaim,
