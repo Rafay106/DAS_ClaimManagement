@@ -33,7 +33,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log(claims);
     let a, p, cp, r, t;
     a = p = cp = r = t = 0;
 
