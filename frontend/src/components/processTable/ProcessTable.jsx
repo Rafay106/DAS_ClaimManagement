@@ -126,7 +126,7 @@ export default function ProcessTable({ claims }) {
                 <TableCell
                   sx={{
                     fontWeight: "bold", // Make the font bold
-                    backgroundColor: "rgb(73, 73, 181)",
+                    backgroundColor: "#3c8dbc",
                     color: "white", // Change the background color
                   }}
                   key={column.id}

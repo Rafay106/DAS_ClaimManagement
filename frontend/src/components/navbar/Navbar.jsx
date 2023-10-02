@@ -1,11 +1,13 @@
+import React, { useState } from "react";
 import "./navbar.scss";
 import SearchIcon from "@mui/icons-material/Search";
 import LanguageIcon from "@mui/icons-material/Language";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-import ListIcon from "@mui/icons-material/List";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined";
+import Dropdown from "react-bootstrap/Dropdown";
+import SettingsIcon from "@mui/icons-material/Settings";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Navbar = () => {
   return (
@@ -29,13 +31,39 @@ const Navbar = () => {
             <NotificationsNoneIcon className="icon" />
             <div className="counter">1</div>
           </div>
-
           <div className="item">
-            <img
-              src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"
-              className="avatar"
-              alt=""
-            />
+            <Dropdown>
+              <Dropdown.Toggle
+                style={{
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  margin: 0,
+                }}
+              >
+                <img
+                  src="https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250"
+                  className="avatar"
+                  alt=""
+                />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1" active>
+                  <AccountCircleIcon className="icon" />
+                  Profile
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-2">
+                  <SettingsIcon className="icon" />
+                  Settings
+                </Dropdown.Item>
+                <Dropdown.Item href="/Login">
+                  {" "}
+                  <LogoutIcon className="icon" />
+                  Logout
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
       </div>

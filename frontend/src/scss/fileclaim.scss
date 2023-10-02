@@ -87,3 +87,23 @@
     }
    }
 }
+
+.inputWithIcon {
+    position: relative;
+  }
+  
+  .inputWithIcon input {
+    padding-right: 30px; /* Adjust the value as needed to make space for the icon */
+  }
+  
+  .inputWithIcon .icon {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust the right spacing as needed */
+    transform: translateY(-50%);
+    color: gray;
+    font-size: 18px;
+    /* Add other styles for the icon, such as width and height */
+  }
+  
+  
