@@ -36,6 +36,7 @@ export const List = ({ claims }) => {
   //     Claim_Status: "Denied",
   //   },
 
+<<<<<<< Updated upstream
   //   {
   //     id: 4,
   //     Name: "Ajau Gaur",
@@ -44,6 +45,16 @@ export const List = ({ claims }) => {
   //     Claim_Amount: 1200,
   //     Claim_Status: "Clarification_Required",
   //   },
+=======
+    {
+      id: 4,
+      Name: "Ajau Gaur",
+      Claim_For: "Tour",
+      Location: "Mumbai",
+      Claim_Amount: 1200,
+      Claim_Status: "Clarification_Pending",
+    },
+>>>>>>> Stashed changes
 
   //   {
   //     id: 5,

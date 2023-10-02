@@ -70,6 +70,7 @@ const Widget = ({ type, count = 0 }) => {
         title: "Clarification Pending",
         isMoney: false,
         link: "See All Clarification Pending",
+<<<<<<< Updated upstream
         icon: (
           <ExploreOutlinedIcon
             className="icon"
@@ -87,6 +88,8 @@ const Widget = ({ type, count = 0 }) => {
         title: "Total",
         isMoney: false,
         link: "See All Claims",
+=======
+>>>>>>> Stashed changes
         icon: (
           <ExploreOutlinedIcon
             className="icon"

@@ -7,8 +7,13 @@ import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+<<<<<<< Updated upstream
 import { Link, useNavigate } from "react-router-dom";
 
+=======
+import { Link } from "react-router-dom";
+import logo from "./DAS_Logo.png";
+>>>>>>> Stashed changes
 const Sidebar = () => {
   const navigate = useNavigate();
   const handleLogout = (e) => {
@@ -17,22 +22,30 @@ const Sidebar = () => {
   };
   return (
     <div className="sidebar">
-      <div className="top">
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">Digital Automation System </span>
-        </Link>
-      </div>
+      <Link to="/">
+        <div
+          className="top"
+          style={{
+            backgroundImage: `url(${logo})`,
+            color: "#3c8dbc",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
+            marginTop: " 10px",
+            marginBottom: " 5px",
+          }}
+        ></div>
+      </Link>
       <hr />
       <div className="center">
         <ul>
-          <p className="title">MAIN</p>
           <li>
             <DashboardIcon className="icon" />
             <Link to="/" style={{ textDecoration: "none" }}>
               <span>Dashboard</span>
             </Link>
           </li>
-          <p className="title">FILES</p>
+
           <li>
             <FileOpenIcon className="icon" />
             <Link to="/FileClaim" style={{ textDecoration: "none" }}>
@@ -55,6 +68,7 @@ const Sidebar = () => {
             <CircleNotificationsIcon className="icon" />
             <span>Notifications</span>
           </li>
+<<<<<<< Updated upstream
           <p className="title">USER</p>
           <li>
             <SettingsIcon className="icon" />
@@ -70,6 +84,8 @@ const Sidebar = () => {
             <LogoutIcon className="icon" />
             <span>Logout</span>
           </li>
+=======
+>>>>>>> Stashed changes
         </ul>
       </div>
       <div className="buttom">
