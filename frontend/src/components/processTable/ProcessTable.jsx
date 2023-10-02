@@ -11,8 +11,8 @@ import SaveIcon from "@mui/icons-material/Save";
 
 const columns = [
   { id: "index", label: "Sr No.", minWidth: 70, align: "center" },
-  { id: "claimer", label: "Claimer", minWidth: 70, align: "center"  },
-  { id: "manager", label: "Manager", minWidth: 70, align: "center"  },
+  { id: "claimer", label: "Claimer", minWidth: 70, align: "center" },
+  { id: "manager", label: "Manager", minWidth: 70, align: "center" },
   {
     id: "billDate",
     label: "Bill Date",
@@ -139,23 +139,31 @@ export default function ProcessTable({ claims }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {claims
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                    {columns.map((column) => {
-                      let value = row[column.id] || index + 1;
-                      if (value === "null") value = "-"
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format ? column.format(value) : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            {claims.length > 0 ? (
+              claims
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  return (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      {columns.map((column) => {
+                        let value = row[column.id] || index + 1;
+                        if (value === "null") value = "-";
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format ? column.format(value) : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })
+            ) : (
+              <TableRow>
+                <TableCell colSpan="10" align="center">
+                  No claims
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

@@ -7,19 +7,16 @@ import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-<<<<<<< Updated upstream
 import { Link, useNavigate } from "react-router-dom";
-
-=======
-import { Link } from "react-router-dom";
 import logo from "./DAS_Logo.png";
->>>>>>> Stashed changes
+
 const Sidebar = () => {
   const navigate = useNavigate();
   const handleLogout = (e) => {
     localStorage.removeItem("user");
     navigate("/login");
   };
+  
   return (
     <div className="sidebar">
       <Link to="/">
@@ -68,24 +65,6 @@ const Sidebar = () => {
             <CircleNotificationsIcon className="icon" />
             <span>Notifications</span>
           </li>
-<<<<<<< Updated upstream
-          <p className="title">USER</p>
-          <li>
-            <SettingsIcon className="icon" />
-            <span>Settings</span>
-          </li>
-
-          <li>
-            <AccountCircleIcon className="icon" />
-            <span>Profile</span>
-          </li>
-
-          <li onClick={handleLogout}>
-            <LogoutIcon className="icon" />
-            <span>Logout</span>
-          </li>
-=======
->>>>>>> Stashed changes
         </ul>
       </div>
       <div className="buttom">

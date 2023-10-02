@@ -91,7 +91,6 @@ const selectTeamClaims = async (user, statusId) => {
   query += " ORDER BY C.SUBMIT_DATE DESC";
 
   const { rows } = await db.query(query);
-  console.log(rows)
 
   if (rows.length > 0) return rows;
 

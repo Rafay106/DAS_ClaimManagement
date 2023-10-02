@@ -8,8 +8,14 @@ import Dropdown from "react-bootstrap/Dropdown";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
+  const { setAuth } = useAuth();
+  const handleLogout = (e) => {
+    localStorage.removeItem("user");
+    setAuth({});
+  };
   return (
     <div className="navbar">
       <div className="wrapper">
@@ -57,8 +63,7 @@ const Navbar = () => {
                   <SettingsIcon className="icon" />
                   Settings
                 </Dropdown.Item>
-                <Dropdown.Item href="/Login">
-                  {" "}
+                <Dropdown.Item onClick={handleLogout}>
                   <LogoutIcon className="icon" />
                   Logout
                 </Dropdown.Item>
