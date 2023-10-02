@@ -5,13 +5,16 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import PendingActionsOutlinedIcon from "@mui/icons-material/PendingActionsOutlined";
 import DoDisturbAltOutlinedIcon from "@mui/icons-material/DoDisturbAltOutlined";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
-const Widget = ({ type }) => {
+import { Link } from "react-router-dom";
+import axios from "axios";
+
+const Widget = ({ type, count = 0 }) => {
   let data;
-  const amount = 100;
+  const amount = count;
   const diff = 20;
 
   switch (type) {
-    case "Approved":
+    case "a":
       data = {
         title: "Approved",
         isMoney: false,
@@ -28,7 +31,7 @@ const Widget = ({ type }) => {
       };
       break;
 
-    case "Pending":
+    case "p":
       data = {
         title: "Pending",
         isMoney: true,
@@ -45,11 +48,11 @@ const Widget = ({ type }) => {
       };
       break;
 
-    case "Denied":
+    case "r":
       data = {
-        title: "Denied",
+        title: "Rejected",
         isMoney: false,
-        link: "See All Denied",
+        link: "See All Rejected",
         icon: (
           <DoDisturbAltOutlinedIcon
             className="icon"
@@ -62,11 +65,28 @@ const Widget = ({ type }) => {
       };
       break;
 
-    case "Clarification Required":
+    case "cp":
       data = {
-        title: "Clarification Required",
+        title: "Clarification Pending",
         isMoney: false,
-        link: "See All Clarification Required",
+        link: "See All Clarification Pending",
+        icon: (
+          <ExploreOutlinedIcon
+            className="icon"
+            style={{
+              color: "purple",
+              backgroundColor: "rgba(128,0,128,0.2)",
+            }}
+          />
+        ),
+      };
+      break;
+
+    case "t":
+      data = {
+        title: "Total",
+        isMoney: false,
+        link: "See All Claims",
         icon: (
           <ExploreOutlinedIcon
             className="icon"

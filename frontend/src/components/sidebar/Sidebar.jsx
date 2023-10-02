@@ -7,8 +7,14 @@ import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const handleLogout = (e) => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
   return (
     <div className="sidebar">
       <div className="top">
@@ -60,7 +66,7 @@ const Sidebar = () => {
             <span>Profile</span>
           </li>
 
-          <li>
+          <li onClick={handleLogout}>
             <LogoutIcon className="icon" />
             <span>Logout</span>
           </li>

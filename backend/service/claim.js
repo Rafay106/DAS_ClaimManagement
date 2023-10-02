@@ -2,7 +2,7 @@ const db = require("../config/db");
 const { getDateTime } = require("../utils/fnCommon");
 
 const selectClaimById = async (claimId) => {
-  const {rows} = await db.query(
+  const { rows } = await db.query(
     `SELECT C.ID,
       C.CLAIM_FOR,
       C.BILL_DATE,
@@ -57,6 +57,7 @@ const selectUserClaims = async (userId, statusId) => {
   const { rows } = await db.query(query);
 
   if (rows.length > 0) return rows;
+
   return false;
 };
 
@@ -164,16 +165,16 @@ const serviceProcessClaim = async (claimId, userId, statusId) => {
 const serviceCreateClaim = async (claim) => {
   const res = await db.query(
     `INSERT INTO claim
-      (claim_for, bill_date, bill_no, amount, submit_date, place, claimer_id, comment) 
+      (claim_for, bill_date, bill_no, amount, submit_date, place, claimer_id, comments) 
     VALUES (
       '${claim.claimFor}', 
       '${claim.billDate}', 
       '0123456789', 
-      ${parseFloat(claim.amt)}, 
+      ${parseFloat(claim.amount)}, 
       '${getDateTime()}', 
       ${parseInt(claim.place)},
       ${parseInt(claim.claimerId)}, 
-      '${claim.comment}'
+      '${JSON.stringify({ dt: new Date(), msg: claim.comment })}'
     );`
   );
   return res;
