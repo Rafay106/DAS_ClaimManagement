@@ -71,7 +71,7 @@ export const List = ({ claims }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {claims.map((row, index) => (
+          {claims.length > 0 ? claims.map((row, index) => (
             <TableRow key={row.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell className="tableCell">{row.claimFor}</TableCell>
@@ -87,7 +87,7 @@ export const List = ({ claims }) => {
                 </span>
               </TableCell>
             </TableRow>
-          ))}
+          )) : (<TableRow><TableCell colSpan={"9"} align="center">No claims</TableCell></TableRow>)}
         </TableBody>
       </Table>
     </TableContainer>

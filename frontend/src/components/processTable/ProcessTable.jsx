@@ -10,35 +10,54 @@ import TableRow from "@mui/material/TableRow";
 import SaveIcon from "@mui/icons-material/Save";
 
 const columns = [
-  { id: "id", label: "Claim_Id", minWidth: 70 },
-  { id: "claimer", label: "Name", minWidth: 70 },
+  { id: "index", label: "Sr No.", minWidth: 70, align: "center" },
+  { id: "claimer", label: "Claimer", minWidth: 70, align: "center"  },
+  { id: "manager", label: "Manager", minWidth: 70, align: "center"  },
+  {
+    id: "billDate",
+    label: "Bill Date",
+    minWidth: 80,
+    align: "center",
+  },
+  {
+    id: "submitDate",
+    label: "Submit Date",
+    minWidth: 80,
+    align: "center",
+  },
+  {
+    id: "lastActionDate",
+    label: "Last Action Date",
+    minWidth: 80,
+    align: "center",
+  },
   {
     id: "claimFor",
     label: "Claim For",
     minWidth: 80,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    align: "center",
+    // format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "city",
     label: "Place",
     minWidth: 70,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    align: "center",
+    // format: (value) => value.toLocaleString("en-US"),
   },
   {
     id: "amount",
     label: "Amount",
     minWidth: 70,
-    align: "right",
-    format: (value) => value.toFixed(2),
+    align: "center",
+    // format: (value) => value.toFixed(2),
   },
   {
     id: "status",
     label: "Status",
     minWidth: 70,
-    align: "right",
-    format: (value) => value.toFixed(2),
+    align: "center",
+    format: (value) => value.toUpperCase(),
   },
 ];
 
@@ -122,16 +141,15 @@ export default function ProcessTable({ claims }) {
           <TableBody>
             {claims
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.Name}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                     {columns.map((column) => {
-                      const value = row[column.id];
+                      let value = row[column.id] || index + 1;
+                      if (value === "null") value = "-"
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          {column.format ? column.format(value) : value}
                         </TableCell>
                       );
                     })}

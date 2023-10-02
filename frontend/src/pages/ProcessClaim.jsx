@@ -17,6 +17,13 @@ const ProcessClaim = () => {
         setMyClaims(res.data);
       })
       .catch((err) => toast.error(err.response.data));
+
+    axios
+      .get("/api/claim/team")
+      .then((res) => {
+        setTeamClaims(res.data);
+      })
+      .catch((err) => toast.error(err.response.data));
   }, []);
   return (
     <div className="new">
