@@ -8,7 +8,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "./DAS_Logo.png";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -16,23 +15,14 @@ const Sidebar = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
-  
+
   return (
     <div className="sidebar">
-      <Link to="/">
-        <div
-          className="top"
-          style={{
-            backgroundImage: `url(${logo})`,
-            color: "#3c8dbc",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center center",
-            marginTop: " 10px",
-            marginBottom: " 5px",
-          }}
-        ></div>
-      </Link>
+      <div id="logo">
+        <Link to="/">
+          <img src="./DAS_Logo.png" width="100%" />
+        </Link>
+      </div>
       <hr />
       <div className="center">
         <ul>
