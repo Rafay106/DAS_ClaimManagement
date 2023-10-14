@@ -85,7 +85,7 @@ const Home = () => {
 
       <div className="listContainer">
         <div className="listTitle d-flex justify-content-between">
-          <p>Latest Claims</p>
+          <p>My Claims</p>
           <p>
             Total Amount:{" "}
             {claims.length > 0

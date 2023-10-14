@@ -2,20 +2,9 @@ import "./sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
 import DetailsIcon from "@mui/icons-material/Details";
-import AssessmentIcon from "@mui/icons-material/Assessment";
-import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
-import SettingsIcon from "@mui/icons-material/Settings";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
-  const navigate = useNavigate();
-  const handleLogout = (e) => {
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
-
   return (
     <div className="sidebar">
       <div id="logo">
@@ -26,35 +15,26 @@ const Sidebar = () => {
       <hr />
       <div className="center">
         <ul>
-          <li>
-            <DashboardIcon className="icon" />
-            <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <li>
+              <DashboardIcon className="icon" />
               <span>Dashboard</span>
-            </Link>
-          </li>
+            </li>
+          </Link>
 
-          <li>
-            <FileOpenIcon className="icon" />
-            <Link to="/FileClaim" style={{ textDecoration: "none" }}>
+          <Link to="/FileClaim" style={{ textDecoration: "none" }}>
+            <li>
+              <FileOpenIcon className="icon" />
               <span>File a Claim</span>
-            </Link>
-          </li>
+            </li>
+          </Link>
 
-          <li>
-            <DetailsIcon className="icon" />
-            <Link to="/ProcessClaim" style={{ textDecoration: "none" }}>
+          <Link to="/ProcessClaim" style={{ textDecoration: "none" }}>
+            <li>
+              <DetailsIcon className="icon" />
               <span>Claim Details</span>
-            </Link>
-          </li>
-          <li>
-            <AssessmentIcon className="icon" />
-            <span>Reports</span>
-          </li>
-
-          <li>
-            <CircleNotificationsIcon className="icon" />
-            <span>Notifications</span>
-          </li>
+            </li>
+          </Link>
         </ul>
       </div>
       <div className="buttom">

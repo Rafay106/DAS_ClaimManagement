@@ -16,15 +16,19 @@
     .search {
       display: flex;
       align-items: center;
-      border: 0.5 lightgrey;
-      padding: 3px;
+      border: none;
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.78);
+      border-radius: 10px;
+      padding: 0.2rem 0.5rem;
 
       input {
         outline: none;
+        border: none;
+
         background: transparent;
 
         &::placeholder {
-          font-size: 12px;
+          font-size: 13px;
         }
       }
     }

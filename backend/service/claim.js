@@ -85,7 +85,8 @@ const selectTeamClaims = async (user, statusId) => {
               JOIN CLAIM_STATUS CS ON C.STATUS_ID = CS.ID
               JOIN ISU I ON CM.ISU_ID = I.ID
               JOIN DU D ON I.ID = D.ID
-              WHERE I.ID = ${user.isu_id}`;
+              WHERE C.CLAIMER_ID != ${user.id}
+              AND I.ID = ${user.isu_id}`;
   if (statusId) query += ` AND CS.ID = ${statusId}`;
 
   query += " ORDER BY C.SUBMIT_DATE DESC";

@@ -10,8 +10,6 @@ import axios from "axios";
 
 const Widget = ({ type, count = 0 }) => {
   let data;
-  const amount = count;
-  const diff = 20;
 
   switch (type) {
     case "a":
@@ -104,21 +102,9 @@ const Widget = ({ type, count = 0 }) => {
 
   return (
     <div className="widget">
-      <div className="left">
-        <span className="title">{data.title}</span>
-        <span className="counter">
-          {data.isMoney && ""}
-          {amount}
-        </span>
-        <span className="link">{data.link}</span>
-      </div>
-      <div className="right">
-        <div className="percentage positive">
-          <ArrowUpwardOutlinedIcon />
-          {diff}%
-        </div>
-        {data.icon}
-      </div>
+      <span className="title">{data.title}</span>
+      <span className="counter">{count}</span>
+      <span id="icon">{data.icon}</span>
     </div>
   );
 };
